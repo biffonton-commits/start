@@ -1,0 +1,34 @@
+sql:
+  enabled: true
+  driver-class-name: "default"
+gui:
+  enabled: true
+runtime:
+  enabled: true
+requests:
+  enabled: true
+files:
+  enabled: true
+world:
+  enabled: true
+permissions:
+  enabled: true
+interpretate:
+  enabled: true
+stringutils:
+  enabled: true
+floodgate:
+  enabled: true
+via:
+  enabled: true
+map:
+  enabled: true
+other:
+  enabled: true
+maps:
+  enabled: true
+sockets:
+  enabled: false
+  server-address: "127.0.0.1"
+  server-port: 1337
+  autoreconnect-time: 5
