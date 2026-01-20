@@ -1,0 +1,176 @@
+
+
+#
+#Last upd 22.06.2024 
+#AnkaAuth 2.0
+#
+#
+
+
+
+#{registered::%uuid of player%}
+#{lastip::%uuid of player%}
+#{entered::%uuid of player%}
+#{password::%uuid of player%}
+on join:
+	set {entertime::%uuid of player%} to now 
+	if {session::%uuid of player%} is not set:
+		set {lastip::%uuid of player%} to 0
+	if {lastip::%uuid of player%} != ip of player:
+		set {entered::%uuid of player%} to false
+	else:
+		if {registered::%uuid of player%} is true:
+			set {lastip::%uuid of player%} to ip of player
+			set {entered::%uuid of player%} to true
+			wait 3 seconds
+			send actionbar "&7Вы вошли по сессии." to player
+	if {registered::%uuid of player%} is not set:
+		set {registered::%uuid of player%} to false
+		regmsg(player)
+on player move:
+	{entered::%uuid of player%} = false
+	block under player is not air
+	cancel event
+	regmsg(player)
+
+on command:
+	{entered::%uuid of player%} = false
+	"%complete command%" doesn't contain "deleteaccount"
+	cancel event
+	regmsg(player)
+	
+on inventory click:
+	{entered::%uuid of player%} = false
+	cancel event
+	regmsg(player)
+on drop:
+	{entered::%uuid of player%} = false
+	cancel event
+	regmsg(player)
+on pickup:
+	{entered::%uuid of player%} = false
+	cancel event
+on click:
+	{entered::%uuid of player%} = false
+	cancel event
+	regmsg(player)
+on damage:
+	{entered::%uuid of victim%} = false
+	cancel event
+#----- FUNCTIONS
+command /deleteaccount:
+	trigger:
+		if {firstip::%uuid of player%} = ip of player:
+			send "&r⤷ &x&d&b&d&5&c&3Ваш аккаунт удалён"
+			execute console command "ankaunregister %player%"
+		else:
+			{entered::%uuid of player%} = true
+			send "&r⤷ &x&d&b&d&5&c&3Ваш аккаунт удалён"
+			execute console command "ankaunregister %player%"
+on chat:
+	set {_p} to player
+	if {registered::%uuid of player%} = false:
+		set {entertime::%uuid of player%} to now
+		set {password::%uuid of player%} to message
+		set {entered::%uuid of player%} to true
+		set {registered::%uuid of player%} to true
+		cancel event
+		set {lastip::%uuid of player%} to ip of player
+		send "&f" to {_p}
+		send " &x&F&B&7&E&0&8▎ &x&d&b&d&5&c&3Вы успешно прошли регистрацию! Приятной игры!" to {_p}
+		send " &x&F&B&7&E&0&8▎ &x&d&b&d&5&c&3Ваш пароль - &a%{password::%uuid of player%}%" to {_p}
+		send " &x&F&B&7&E&0&8▎ &x&d&b&d&5&c&3Если допустили ошибку, &cнажмите шифт &x&d&b&d&5&c&3в течении 9с." to {_p}
+		set {firstip::%uuid of player%} to ip of player
+		send "&f" to {_p}
+		set {regdata::%uuid of player%} to now
+		le spawn text display 2 above player
+		set {_e} to last spawned text display
+		set display text of {_e} to "&aВошёл в аккаунт"
+		set display billboard of {_e} to vertical
+		set display text shadowed of {_e} to false
+		set display default text background of {_e} to false
+		set display view range of {_e} to 10
+		set display text background color of {_e} to bukkitColor(0,0,0,0)
+		wait a tick
+		loop 50 times:
+			wait a tick
+			set display text opacity of {_e} to display text opacity of {_e} - 5
+		kill {_e}
+	else:
+		{entered::%uuid of player%} = false
+		if message = {password::%uuid of player%}:
+			set {lastip::%uuid of player%} to ip of player
+			set {entertime::%uuid of player%} to now
+			set {entered::%uuid of player%} to true
+			cancel event
+			send "&f" to {_p}
+			send " &x&F&B&7&E&0&8▎ &x&d&b&d&5&c&3Вы успешно вошли в &aаккаунт" to {_p}
+			send " &x&F&B&7&E&0&8▎ &x&d&b&d&5&c&3Приятной игры!" to {_p}
+			
+			send "&f" to {_p}
+			le spawn text display 2 above player
+			set {_e} to last spawned text display
+			set display text of {_e} to "&cВошёл в аккаунт"
+			set display billboard of {_e} to vertical
+			set display text shadowed of {_e} to false
+			set display default text background of {_e} to false
+			set display view range of {_e} to 10
+			set display text background color of {_e} to bukkitColor(0,0,0,0)
+			wait a tick
+			loop 50 times:
+				wait a tick
+				set display text opacity of {_e} to display text opacity of {_e} - 5
+			kill {_e}
+			wait 2 seconds
+			if {session::%uuid of player%} is not set:
+				send "&r⤷ &x&d&b&d&5&c&3Включите вход по сессии, чтобы не входить снова и снова - &c/session on"
+			
+		else:
+			cancel event
+			send actionbar "&cНеверный пароль." to player
+command /logout:
+	trigger:
+		kick player due to "&cВы вышли с аккаунта"
+		set {lastip::%uuid of player%} to 0
+command /ankaunregister [<offlineplayer>]:
+	permission: *
+	trigger:
+		set {registered::%uuid of arg-1%} to false
+		set {entered::%uuid of arg-1%} to false
+		send actionbar "&7Вы удалили аккаунт %arg-1%"
+on sneak toggle:
+	{regdata::%uuid of player%} is set
+	difference between {regdata::%uuid of player%} and now < 10 seconds
+	delete {regdata::%uuid of player%}
+	set {registered::%uuid of player%} to false
+	set {entered::%uuid of player%} to false
+	send "&cРегистрация отменена. Введите пароль ещё раз."
+function regmsg(p: player):
+	if {registered::%uuid of {_p}%} = false:
+		send "&f" to {_p}
+		send " &x&F&B&7&E&0&8▎ &x&d&b&d&5&c&3Зарегестрируйтесь на сервере" to {_p}
+		send " &x&F&B&7&E&0&8▎ &x&d&b&d&5&c&3Введите &x&0&8&F&B&1&8ваш &x&d&b&d&5&c&3пароль в чат." to {_p}
+		send "&f" to {_p}
+	else:
+		send "&f" to {_p}
+		send " &x&F&B&7&E&0&8▎ &x&d&b&d&5&c&3Войдите в аккаунт" to {_p}
+		send " &x&F&B&7&E&0&8▎ &x&d&b&d&5&c&3Введя пароль в &cчат." to {_p}
+		send "&f" to {_p}
+command /session [<text>]:
+	trigger:
+		if arg-1 is "on":
+			set {session::%uuid of player%} to true
+			send actionbar "&x&d&b&d&5&c&3Успешно!" to player
+		else:
+			delete {session::%uuid of player%}
+			send actionbar "&x&d&b&d&5&c&3Успешно отключено." to player
+command /logoutall:
+	permission: *
+	trigger:
+		broadcast "&x&d&b&d&5&c&3Выполните вход повторно"
+		loop all players:
+			set {entered::%uuid of loop-player%} to false
+command /ipv [<offlineplayer>]:
+	permission: *
+	trigger:
+		send {lastip::%uuid of arg-1%}

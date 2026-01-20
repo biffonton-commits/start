@@ -1,0 +1,307 @@
+on chat:
+	{-avoperation::%uuid of player%::d} is set
+	delete {-avoperation::%uuid of player%::d}
+	set {ankgroups::%message%} to 1
+	set {ankgroups::%message%::prefix} to "&r"
+	set {ankgroups::%message%::suffix} to "&r"
+	#set {ankgroups::%message%::perms::*} 
+	send action bar "&aСоздана группа."
+	delete {-avoperation::%uuid of player%::a}
+on chat:
+	{-avoperation::%uuid of player%::c} is set
+	set {ankperms::%{-avoperation::%uuid of player%::p}'s name%::%message%} to true
+	if message is "op":
+		op {-avoperation::%uuid of player%::p}
+		add "*" to {-avoperation::%uuid of player%::p}'s perms
+		stop
+	add "%message%" to {-avoperation::%uuid of player%::p}'s perms
+	send action bar "&aДобавлено."
+on chat:
+	{-avoperation::%uuid of player%::f} is set
+	set {ankgroups::%{-avoperation::%uuid of player%::e}%::perms::%message%} to true
+	send action bar "&aДобавлено."
+on chat:
+	{-avoperation::%uuid of player%::j} is set
+	delete {-avoperation::%uuid of player%::j}
+	set {ankgroups::%{-avoperation::%uuid of player%::e}%::prefix} to message
+	send action bar "&aУспешно."
+	execute player command "avalg editgroup %player% %{-avoperation::%uuid of player%::e}%"
+on chat:
+	{-avoperation::%uuid of player%::k} is set
+	delete {-avoperation::%uuid of player%::k}
+	set {ankgroups::%{-avoperation::%uuid of player%::e}%::suffix} to message
+	send action bar "&aУспешно."
+	execute player command "avalg editgroup %player% %{-avoperation::%uuid of player%::e}%"
+on chat:
+	{-avoperation::%uuid of player%::m} is set
+	delete {-avoperation::%uuid of player%::m}
+	set {ankpg::%{-avoperation::%uuid of player%::p}'s name%} to message
+	send action bar "&aУспешно. Права игрока перезагружены"
+	execute player command "avalg list %{-avoperation::%uuid of player%::p}%"
+	loop permissions of {-avoperation::%uuid of player%::p}:
+		clear player's perms
+
+		loop {ankgroups::%{ankpg::%{-avoperation::%uuid of player%::p}'s name%}%::perms::*}:
+			if loop-index is "op":
+				set {_a} to 1
+				op {-avoperation::%uuid of player%::p}
+			else:
+				{_a} is not set
+				deop {-avoperation::%uuid of player%::p}
+			add "%loop-index%" to {-avoperation::%uuid of player%::p}'s perms
+		loop {ankperms::%{-avoperation::%uuid of player%::p}'s name%::*}:
+			if loop-index is "op":
+				set {_a} to 1
+				op {-avoperation::%uuid of player%::p}
+			else:
+				{_a} is not set
+				deop {-avoperation::%uuid of player%::p}
+			add "%loop-index%" to {-avoperation::%uuid of player%::p}'s perms
+on sneak toggle:
+	{-avoperation::%uuid of player%::f} is set
+	delete {-avoperation::%uuid of player%::f}
+	delete {-avoperation::%uuid of player%::a}
+	execute player command "avalg editgroup %player% %{-avoperation::%uuid of player%::e}%"	
+	loop all players:
+		clear loop-player's perms
+		loop {ankgroups::%{ankpg::%loop-player's name%}%::perms::*}:
+			if loop-index is "op":
+				set {_a} to 1
+				op the loop-player
+			else:
+				{_a} is not set
+				deop the loop-player
+			add "%loop-index%" to loop-player's perms
+		loop {ankperms::%loop-player's name%::*}:
+			if loop-index is "op":
+				set {_a} to 1
+				op the loop-player
+			else:
+				{_a} is not set
+				deop the loop-player
+			add "%loop-index%" to loop-player's perms
+on sneak toggle:
+	{-avoperation::%uuid of player%::c} is set
+	delete {-avoperation::%uuid of player%::c}
+	delete {-avoperation::%uuid of player%::a}
+	execute player command "avalg list %{-avoperation::%uuid of player%::p}%"
+command /avalg [<text>] [<offlineplayer>] [<text>]:
+	aliases: avperms:avalg
+	permission: *
+	trigger:			
+		arg-1 is set
+		if arg-1 is "changeplayergroup":
+			set {-avoperation::%uuid of player%::m} to 1
+			send "&r⤷ &x&d&b&d&5&c&3Введите в чат новую группу игрока"
+			set {-avoperation::%uuid of player%::a} to "gr"
+		if arg-1 is "changesuffix":
+			set {-avoperation::%uuid of player%::k} to 1
+			send "&r⤷ &x&d&b&d&5&c&3Введите в чат новый суффикс"
+			set {-avoperation::%uuid of player%::a} to "prefsuf"
+		if arg-1 is "changeprefix":
+			set {-avoperation::%uuid of player%::j} to 1
+			send "&r⤷ &x&d&b&d&5&c&3Введите в чат новый префикс"
+			set {-avoperation::%uuid of player%::a} to "prefsuf"
+		if arg-1 is "delgroup":
+			if {-avoperation::%uuid of player%::e} is "default":
+				send action bar "&cЭту группу нельзя удалить :/"
+				stop
+			delete  {ankgroups::%{-avoperation::%uuid of player%::e}%}
+			execute player command "avalg backg"
+		if arg-1 is "copyperms":
+			loop {ankgroups::%arg-3%::perms::*}:
+				set {ankgroups::%{-avoperation::%uuid of player%::e}%::perms::%loop-index%} to true
+			execute player command "avalg editgroup %player% %{-avoperation::%uuid of player%::e}%"
+			loop all players:
+				clear loop-player's perms
+				loop {ankgroups::%{ankpg::%loop-player's name%}%::perms::*}:
+					if loop-index is "op":
+						set {_a} to 1
+						op the loop-player
+					else:
+						{_a} is not set
+						deop the loop-player
+					add "%loop-index%" to loop-player's perms
+				loop {ankperms::%loop-player's name%::*}:
+					if loop-index is "op":
+						set {_a} to 1
+						op the loop-player
+					else:
+						{_a} is not set
+						deop the loop-player
+					add "%loop-index%" to loop-player's perms
+		if arg-1 is "delgroupperm":
+			delete {ankgroups::%{-avoperation::%uuid of player%::e}%::perms::%arg-3%} 
+			execute player command "avalg editgroup %player% %{-avoperation::%uuid of player%::e}%"
+			loop all players:
+				clear loop-player's perms
+				loop {ankgroups::%{ankpg::%loop-player's name%}%::perms::*}:
+					if loop-index is "op":
+						set {_a} to 1
+						op the loop-player
+					else:
+						{_a} is not set
+						deop the loop-player
+					add "%loop-index%" to loop-player's perms
+				loop {ankperms::%loop-player's name%::*}:
+					if loop-index is "op":
+						set {_a} to 1
+						op the loop-player
+					else:
+						{_a} is not set
+						deop the loop-player
+					add "%loop-index%" to loop-player's perms
+		if arg-1 is "editgroup":
+			set {-avoperation::%uuid of player%::e} to arg-3
+			send "&r⤷ &x&d&b&d&5&c&3Группа &a%arg-3%"
+			send "&F"
+			send formatted "&6 ▎ &x&d&b&d&5&c&3Префикс: &r%{ankgroups::%arg-3%::prefix}% <tooltip:&7Клик><cmd:/avalg changeprefix>&6&n[Изменить]<r>"
+			send formatted "&6 ▎ &x&d&b&d&5&c&3Суффикс: &r%{ankgroups::%arg-3%::suffix}% <tooltip:&7Клик><cmd:/avalg changesuffix>&6&n[Изменить]<r>"
+			send "&F"
+			send "&6 ▎ &x&d&b&d&5&c&3Скопировать права с групп:"
+			loop {ankgroups::*}:
+				loop-index is not arg-3
+				send formatted "&7 ▎ &f &x&d&b&d&5&c&3%loop-index% <tooltip:&7Клик><cmd:/avalg copyperms %player% %loop-index%>&6&n[Скопировать]<r>"
+			send "&F"
+			send "&6 ▎ &x&d&b&d&5&c&3Права группы:"
+			loop {ankgroups::%arg-3%::perms::*}:
+				send formatted "&4 ▎ &x&d&b&d&5&c&3%loop-index% <tooltip:&7Клик><cmd:/avalg delgroupperm %player% %loop-index%>&4[Удалить]<r>"
+			send formatted "&6 ▎ &x&d&b&d&5&c&3<tooltip:&7Клик><cmd:/avalg addgroupperm>&a&n[ + ]<r>"
+			send "&f"
+			send formatted "&4 ▎ &x&d&b&d&5&c&3<tooltip:&7Клик><cmd:/avalg delgroup>&4&n[Удалить группу]<r>"
+			send "&f"
+			send formatted "&6 ▎ &x&d&b&d&5&c&3 <tooltip:&7Клик><cmd:/avalg backg>&x&d&b&d&5&c&3[Вернуться назад]<r>" 
+		if arg-1 is "newgroup":
+			set {-avoperation::%uuid of player%::d} to 1
+			send "&r⤷ &x&d&b&d&5&c&3Введите в чат название группы"
+			set {-avoperation::%uuid of player%::a} to "group"
+		if arg-1 is "unset":
+			
+			delete {ankperms::%arg-2's name%::%arg-3%}
+			if arg-3 is "op":
+				deop {-avoperation::%uuid of player%::p}
+				stop
+			remove "%arg-3%" from {-avoperation::%uuid of player%::p}'s perms
+			execute player command "avalg list %{-avoperation::%uuid of player%::p}%"
+		if arg-1 is "addgroupperm":
+			set {-avoperation::%uuid of player%::f} to 1
+			send "&r⤷ &x&d&b&d&5&c&3Введите в чат поочередно все права, когда закончите нажмите шифт"
+			set {-avoperation::%uuid of player%::a} to "setgroupperms"
+		if arg-1 is "addperm":
+			set {-avoperation::%uuid of player%::c} to 1
+			send "&r⤷ &x&d&b&d&5&c&3Введите в чат поочередно все права, когда закончите нажмите шифт"
+			set {-avoperation::%uuid of player%::a} to "setnewperms"
+		if arg-1 is "backg":
+			send "&r⤷ &x&d&b&d&5&c&3avperms"
+			send "&F"
+			send "&6 ▎ &x&d&b&d&5&c&3Список групп"
+			send "&F"
+			loop {ankgroups::*}:
+				send formatted "&4 ▎ &x&d&b&d&5&c&3%loop-index% <tooltip:&7Клик><cmd:/avalg editgroup %player% %loop-index%>&x&F&6&B&E&4&3&n[&x&F&6&B&F&4&A&nР&x&F&6&C&0&5&0&nе&x&F&6&C&1&5&7&nд&x&F&6&C&2&5&D&nа&x&F&6&C&3&6&4&nк&x&F&6&C&4&6&A&nт&x&F&6&C&5&7&1&nи&x&F&6&C&6&7&7&nр&x&F&6&C&7&7&E&nо&x&F&6&C&8&8&4&nв&x&F&6&C&9&8&B&nа&x&F&6&C&A&9&1&nт&x&F&6&C&B&9&8&nь&x&F&6&C&C&9&E&n]<r>"
+			send formatted "&4 ▎ <tooltip:&7Клик><cmd:/avalg newgroup>&x&0&8&F&B&8&F&n[&x&1&8&F&B&9&6&nС&x&2&9&F&C&9&E&nо&x&3&9&F&C&A&5&nз&x&4&A&F&C&A&D&nд&x&5&A&F&C&B&4&nа&x&6&B&F&D&B&C&nт&x&7&B&F&D&C&3&nь &x&9&C&F&D&D&2&nг&x&A&D&F&E&D&A&nр&x&B&D&F&E&E&1&nу&x&C&E&F&E&E&9&nп&x&D&E&F&E&F&0&nп&x&E&F&F&F&F&8&nу&x&F&F&F&F&F&F&n]<r>"
+			send "&f"
+			send formatted "&6 ▎ &x&d&b&d&5&c&3 <tooltip:&7Клик><cmd:/avperms>&x&d&b&d&5&c&3[Вернуться назад]<r>" 
+		if arg-1 is "backp":
+			delete {-avoperation::%uuid of player%::a}
+			send "&r⤷ &x&d&b&d&5&c&3avperms"
+			send "&F"
+			send formatted "&6 ▎ &x&d&b&d&5&c&3Группа игрока: &r%{ankpg::%{-avoperation::%uuid of player%::p}'s name%}% <tooltip:&7Клик><cmd:/avalg changeplayergroup>&6&n[Изменить]<r>"
+			send "&F"
+			send "&6 ▎ &x&d&b&d&5&c&3Действия с игроком"
+			send "&F"
+			send formatted "&6 ▎ &x&d&b&d&5&c&3 <tooltip:&7Клик><cmd:/avalg list %{-avoperation::%uuid of player%::p}%>&x&F&B&0&8&0&8&n[&x&F&3&0&A&0&A&nП&x&E&B&0&B&0&B&nо&x&E&4&0&D&0&D&nс&x&D&C&0&E&0&E&nм&x&D&4&1&0&1&0&nо&x&C&C&1&2&1&2&nт&x&C&5&1&3&1&3&nр&x&B&D&1&5&1&5&nе&x&B&5&1&6&1&6&nт&x&A&D&1&8&1&8&nь &x&9&E&1&B&1&B&nп&x&9&6&1&D&1&D&nр&x&8&E&1&E&1&E&nа&x&8&7&2&0&2&0&nв&x&7&F&2&1&2&1&nа&x&7&7&2&3&2&3&n]<r>" 
+			send formatted "&6 ▎ &x&d&b&d&5&c&3 <tooltip:&7Клик><cmd:/avalg addperm>&x&0&8&F&B&8&F&n[&x&1&3&F&B&9&4&nД&x&1&E&F&B&9&9&nо&x&2&A&F&C&9&E&nб&x&3&5&F&C&A&3&nа&x&4&0&F&C&A&8&nв&x&4&B&F&C&A&E&nи&x&5&7&F&C&B&3&nт&x&6&2&F&C&B&8&nь &x&7&8&F&D&C&2&nп&x&8&4&F&D&C&7&nр&x&8&F&F&D&C&C&nа&x&9&A&F&D&D&1&nв&x&A&5&F&E&D&6&nа &x&B&C&F&E&E&0&nи&x&C&7&F&E&E&6&nг&x&D&2&F&E&E&B&nр&x&D&D&F&E&F&0&nо&x&E&9&F&F&F&5&nк&x&F&4&F&F&F&A&nу&x&F&F&F&F&F&F&n]<r>" 
+			send "&F"
+			send formatted "&6 ▎ &x&d&b&d&5&c&3 <tooltip:&7Клик><cmd:/avperms>&x&d&b&d&5&c&3[Вернуться назад]<r>" 
+		if arg-1 is "list":
+			send "&r⤷ &x&d&b&d&5&c&3Права игрока &a%arg-2%&x&d&b&d&5&c&3 :"
+			send "&f"
+			loop {ankperms::%arg-2's name%::*}:
+				send formatted " &x&9&1&0&D&0&D▎ &f%loop-index% <tooltip:&7Клик><cmd:/avalg unset %{-avoperation::%uuid of player%::p}% %loop-index%>&4[Удалить]<r>"
+			send "&f"
+			send formatted "&6 ▎ &x&d&b&d&5&c&3 <tooltip:&7Клик><cmd:/avalg backp>&x&d&b&d&5&c&3[Вернуться назад]<r>" 
+command /avperms [<text>]:
+	aliases: avperms:avperms
+	permission: *
+	trigger:
+		send "&r⤷ &x&d&b&d&5&c&3avperms"
+		send "&F"
+		send "&6 ▎ &x&d&b&d&5&c&3Выберите одну из опций ниже:"
+		send "&F"
+		send "&6 ▎ &x&d&b&d&5&c&31 | Перейти к управлению игроками"
+		send "&6 ▎ &x&d&b&d&5&c&32 | Перейти к управлению группами"
+		send "&F"
+		send "&r⤷ &x&d&b&d&5&c&3Введите цифру выбранного пункта в чат &7(Отменить - cancel)"
+		set {-avoperation::%uuid of player%::a} to "punkt"
+		send "&f"
+		
+on join:
+	delete {-avoperation::%uuid of player%::a}
+	
+on chat:
+	wait a tick
+	{-avoperation::%uuid of player%::a} is set
+	if {-avoperation::%uuid of player%::a} is "player":
+		delete {-avoperation::%uuid of player%::a}
+		set {-avoperation::%uuid of player%::p} to message parsed as offlineplayer
+		send "&r⤷ &x&d&b&d&5&c&3avperms"
+		send "&F"
+		send formatted "&6 ▎ &x&d&b&d&5&c&3Группа игрока: &r%{ankpg::%{-avoperation::%uuid of player%::p}'s name%}% <tooltip:&7Клик><cmd:/avalg changeplayergroup>&6&n[Изменить]<r>"
+		send "&F"
+		send "&6 ▎ &x&d&b&d&5&c&3Действия с игроком"
+		send "&F"
+		send formatted "&6 ▎ &x&d&b&d&5&c&3 <tooltip:&7Клик><cmd:/avalg list %message%>&x&F&B&0&8&0&8&n[&x&F&3&0&A&0&A&nП&x&E&B&0&B&0&B&nо&x&E&4&0&D&0&D&nс&x&D&C&0&E&0&E&nм&x&D&4&1&0&1&0&nо&x&C&C&1&2&1&2&nт&x&C&5&1&3&1&3&nр&x&B&D&1&5&1&5&nе&x&B&5&1&6&1&6&nт&x&A&D&1&8&1&8&nь &x&9&E&1&B&1&B&nп&x&9&6&1&D&1&D&nр&x&8&E&1&E&1&E&nа&x&8&7&2&0&2&0&nв&x&7&F&2&1&2&1&nа&x&7&7&2&3&2&3&n]<r>" 
+		send formatted "&6 ▎ &x&d&b&d&5&c&3 <tooltip:&7Клик><cmd:/avalg addperm>&x&0&8&F&B&8&F&n[&x&1&3&F&B&9&4&nД&x&1&E&F&B&9&9&nо&x&2&A&F&C&9&E&nб&x&3&5&F&C&A&3&nа&x&4&0&F&C&A&8&nв&x&4&B&F&C&A&E&nи&x&5&7&F&C&B&3&nт&x&6&2&F&C&B&8&nь &x&7&8&F&D&C&2&nп&x&8&4&F&D&C&7&nр&x&8&F&F&D&C&C&nа&x&9&A&F&D&D&1&nв&x&A&5&F&E&D&6&nа &x&B&C&F&E&E&0&nи&x&C&7&F&E&E&6&nг&x&D&2&F&E&E&B&nр&x&D&D&F&E&F&0&nо&x&E&9&F&F&F&5&nк&x&F&4&F&F&F&A&nу&x&F&F&F&F&F&F&n]<r>" 
+		send "&F"
+		send formatted "&6 ▎ &x&d&b&d&5&c&3 <tooltip:&7Клик><cmd:/avperms>&x&d&b&d&5&c&3[Вернуться назад]<r>" 
+
+	
+on chat:
+	wait a tick
+	{-avoperation::%uuid of player%::a} is set
+	if {-avoperation::%uuid of player%::a} is "punkt":
+		if message contains "1":
+			set {-avoperation::%uuid of player%::a} to "player"
+			send "&r⤷ &x&d&b&d&5&c&3Введите ник игрока в чат."
+		if message contains "2":
+			delete {-avoperation::%uuid of player%::a}
+			
+			send "&r⤷ &x&d&b&d&5&c&3avperms"
+			send "&F"
+			send "&6 ▎ &x&d&b&d&5&c&3Список групп"
+			send "&F"
+			loop {ankgroups::*}:
+				send formatted "&4 ▎ &x&d&b&d&5&c&3%loop-index% <tooltip:&7Клик><cmd:/avalg editgroup %player% %loop-index%>&x&F&6&B&E&4&3&n[&x&F&6&B&F&4&A&nР&x&F&6&C&0&5&0&nе&x&F&6&C&1&5&7&nд&x&F&6&C&2&5&D&nа&x&F&6&C&3&6&4&nк&x&F&6&C&4&6&A&nт&x&F&6&C&5&7&1&nи&x&F&6&C&6&7&7&nр&x&F&6&C&7&7&E&nо&x&F&6&C&8&8&4&nв&x&F&6&C&9&8&B&nа&x&F&6&C&A&9&1&nт&x&F&6&C&B&9&8&nь&x&F&6&C&C&9&E&n]<r>"
+			send formatted "&4 ▎ <tooltip:&7Клик><cmd:/avalg newgroup>&x&0&8&F&B&8&F&n[&x&1&8&F&B&9&6&nС&x&2&9&F&C&9&E&nо&x&3&9&F&C&A&5&nз&x&4&A&F&C&A&D&nд&x&5&A&F&C&B&4&nа&x&6&B&F&D&B&C&nт&x&7&B&F&D&C&3&nь &x&9&C&F&D&D&2&nг&x&A&D&F&E&D&A&nр&x&B&D&F&E&E&1&nу&x&C&E&F&E&E&9&nп&x&D&E&F&E&F&0&nп&x&E&F&F&F&F&8&nу&x&F&F&F&F&F&F&n]<r>"
+			send "&f"
+			send formatted "&6 ▎ &x&d&b&d&5&c&3 <tooltip:&7Клик><cmd:/avperms>&x&d&b&d&5&c&3[Вернуться назад]<r>" 
+		stop
+	delete {-avoperation::%uuid of player%::a}
+			
+			
+			
+			
+			
+		
+
+				
+				
+on join:
+	if {ankpg::%player's name%} is not set:
+		set {ankpg::%player's name%} to "default"
+	loop {ankgroups::%{ankpg::%player's name%}%::perms::*}:
+		if loop-index is "op":
+			set {_a} to 1
+			op the player
+		else:
+			{_a} is not set
+			deop the player
+		add "%loop-index%" to player's perms
+	loop {ankperms::%player's name%::*}:
+		if loop-index is "op":
+			set {_a} to 1
+			op the player
+		else:
+			{_a} is not set
+			deop the player
+		add "%loop-index%" to player's perms

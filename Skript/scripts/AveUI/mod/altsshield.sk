@@ -1,0 +1,22 @@
+on join:
+	if {uuid::%uuid of player%} is not set:
+		set {uuid::%uuid of player%} to name of player
+		stop
+	else:
+		{uuid::%uuid of player%} != name of player
+		execute console command "kick %player% Использование мультиаккаунтов"
+		set {uuid::%uuid of player%} to "~!*"
+	if {uuid::%uuid of player%} = "~!*":
+		execute console command "kick %player% Использование мультиаккаунтов"
+command /deletealt [<text>]:
+	aliases: ankaengine:deletealt
+	trigger:
+		arg-1 is set
+		set {_v} to executor
+		if executor is not a player:
+			set {_v} to "&aConsole"
+		else:
+			{moder::%player%} is false
+			stop	
+		send "&r{@arrow} &x&d&b&d&5&c&3Уникальный индетификатор удален из черного списка."
+		delete {uuid::%arg 1%}

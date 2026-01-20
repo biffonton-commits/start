@@ -1,0 +1,13 @@
+
+on load:
+	register shaped recipe:
+		id: "anka:light"
+		result: light
+		shape: "x", "y", "x"
+		group: "bloop"
+		category: "building"
+		ingredients:
+			set ingredient of "x" to torch
+			set ingredient of "y" to glowstone
+
+

@@ -1,0 +1,515 @@
+
+
+#RAVEN SECURITY / AI SYSTEM 
+#LAST UPD. 290724 
+
+
+
+
+#-------------- cutted temp. -----------------
+
+
+options:
+	prefix: &x&5&A&0&8&F&B&l&oRAVEN ➡&r
+	notifyenabled: true
+	
+	
+#------ 𝘕𝘰𝘵𝘪𝘧𝘺 𝘗𝘦𝘳𝘮 ------
+	np: raven.notify
+#------------------------
+
+#------ 𝘈𝘥𝘮𝘪𝘯𝘪𝘴𝘵𝘳𝘢𝘵𝘰𝘳 𝘱𝘦𝘳𝘮 ------
+	ap: raven.admin
+#------------------------
+
+
+#------ 𝘔𝘢𝘹𝘪𝘮𝘶𝘮 𝘤𝘩𝘢𝘯𝘤𝘦 𝘰𝘧 𝘴𝘶𝘴𝘱𝘪𝘤𝘪𝘰𝘯 𝘵𝘰 BAN ------
+	mv: -1
+#------ 𝘌𝘯𝘵𝘦𝘳 -1 𝘵𝘰 𝘵𝘶𝘳𝘯 𝘰𝘧𝘧 𝘣𝘢𝘯𝘴 ------
+
+
+#------ 𝘔𝘢𝘹𝘪𝘮𝘶𝘮 𝘱𝘭𝘢𝘺𝘦𝘳 𝘱𝘪𝘯𝘨 ------
+	pp: 190
+#------------------------
+
+
+
+
+
+
+
+
+#------ 𝘚𝘱𝘦𝘦𝘥𝘏𝘢𝘤𝘬 ------
+
+	sh1: 2.26 #𝙼𝚒𝚗𝚒𝚖𝚞𝚖 𝚍𝚎𝚝𝚎𝚌𝚝 𝚍𝚒𝚜𝚝𝚊𝚗𝚌𝚎 [ 𝙲𝚊𝚗 𝚋𝚎 𝚜𝚎𝚝 𝚝𝚘 𝟸.𝟷 - 𝟸.𝟻 ]
+	sh2: 13.25 #𝙼𝚒𝚗𝚒𝚖𝚞𝚖 𝚝𝚙𝚜 𝚏𝚘𝚛 𝚜𝚙𝚎𝚎𝚍𝚑𝚊𝚌𝚔 𝚌𝚑𝚎𝚌𝚔
+	
+#------------------------	
+	
+#------ 𝘏𝘪𝘵𝘙𝘦𝘢𝘤𝘩 ------
+
+	hr1: 5.6 #𝙼𝚊𝚡𝚒𝚖𝚞𝚖 𝚙𝚕𝚊𝚢𝚎𝚛 𝚛𝚎𝚊𝚌𝚑 𝚍𝚒𝚜𝚝𝚊𝚗𝚌𝚎 (𝙳𝚘𝚗'𝚝 𝚛𝚎𝚌𝚘𝚖𝚖𝚎𝚗𝚍𝚎𝚍 𝚝𝚘 𝚌𝚑𝚊𝚗𝚐𝚎.)
+	
+#------------------------	
+
+
+
+
+#------ 𝘉𝘢𝘯 𝘔𝘦𝘴𝘴𝘢𝘨𝘦 (𝘶𝘴𝘦 %𝘯𝘭% 𝘧𝘰𝘳 𝘯𝘦𝘸 𝘭𝘪𝘯𝘦) ------
+
+	banmsg: &9&l◊ RAVEN SYSTEM ◊ %nl%%nl%&fВы заблокированы защитой сервера%nl%&fза &cчиты%nl%%nl%%nl%
+	
+#------------------------	
+
+
+
+
+#------------------------
+#Commands
+
+on player move:
+	if difference between {-ac_lastcheck::%uuid of player%} and now is more than 10 minutes:
+		{-ac_chance::%uuid of player%} >= 20
+		remove 20 from {-ac_chance::%uuid of player%}
+	if difference between {-ac_lastcheck::%uuid of player%} and now is more than 2 hours:
+		{-ac_chance::%uuid of player%} >= 40
+		remove 40 from {-ac_chance::%uuid of player%}
+	
+function notify(p: player, reason: text, value: text):
+	if difference between {-ac_lastcheck::%uuid of {_p}%} and now is more than 30 minutes:
+		{-ac_chance::%uuid of {_p}%} >= 10
+		remove 10 from {-ac_chance::%uuid of {_p}%}
+	if {-ac_lastviol::%uuid of {_p}%} = "SpeedHack":
+		{_reason} = "KillAura"
+		add 10.85 to {-ac_chance::%uuid of {_p}%}
+	else if {-ac_lastviol::%uuid of {_p}%} = "KillAura":
+		{_reason} = "SpeedHack"
+		add 11.97 to {-ac_chance::%uuid of {_p}%}
+	else if {-ac_lastviol::%uuid of {_p}%} = "KillAura":
+		{_reason} = "KillAura"
+		difference between {-ac_lastcheck::%uuid of {_p}%} and now is less than 2 minutes
+		add 6.11 to {-ac_chance::%uuid of {_p}%}
+	else if {-ac_lastviol::%uuid of {_p}%} = "HitReach":
+		{_reason} = "KillAura"
+		add 21.97 to {-ac_chance::%uuid of {_p}%}
+		
+	if {-ac_target::%uuid of {_p}%} is set:
+		if "%{_reason}%" = "%{-ac_suspicion::%uuid of {_p}%}%":
+			add 8.77 to {-ac_chance::%uuid of {_p}%}
+		else:
+			add 2.11 to {-ac_chance::%uuid of {_p}%}
+		if difference between {-ac_target::%uuid of {_p}%} and now > 25 minutes:
+			delete {-ac_target::%uuid of {_p}%}
+	if {_reason} = "SpeedHack" or "EntityCPS":
+		set {_i} to true
+		add 3.15 to {-ac_chance::%uuid of {_p}%}
+		set {-ac_lastviol::%uuid of {_p}%} to "SpeedHack"
+	if {_reason} = "KillAura":
+		set {_i} to true
+		add 5 to {-ac_chance::%uuid of {_p}%}
+		set {-ac_lastviol::%uuid of {_p}%} to "KillAura"
+	if {_reason} = "Possible XRay": 
+		add 44 to {-ac_chance::%uuid of {_p}%}
+	if {_reason} = "JesusHack":
+		set {_i} to true
+		add 8.54 to {-ac_chance::%uuid of {_p}%}
+		set {-ac_lastviol::%uuid of {_p}%} to "JesusHack"
+	if {_reason} = "Flight":
+		set {_i} to true
+		add 10.55 to {-ac_chance::%uuid of {_p}%}
+		set {-ac_lastviol::%uuid of {_p}%} to "Flight"
+	if {_reason} = "HitReach":
+		set {_i} to true
+		add 13.53 to {-ac_chance::%uuid of {_p}%}
+		set {-ac_lastviol::%uuid of {_p}%} to "HitReach"
+	set {-ac_lastcheck::%uuid of {_p}%} to now
+	if {_i} is not set:
+		add 3.76 to {-ac_chance::%uuid of {_p}%}
+	if {-guivcount::%uuid of {_p}%} >= 55:
+		set {-guivcount::%uuid of {_p}%} to 18
+	add 1 to {-guivcount::%uuid of {_p}%}
+	set {-guiviols::%uuid of {_p}%::%{-guivcount::%uuid of {_p}%}%} to "&7%{_reason}% &7[%{_value}%] (%now%) "
+	set {-guiviols::%uuid of {_p}%::xyz::%{-guivcount::%uuid of {_p}%}%} to "%round(x-coordinate of {_p})%, %round(y-coordinate of {_p})%, %round(z-coordinate of {_p})%"
+	{@notifyenabled} is true
+	{-ac_chance::%uuid of {_p}%} > 7
+	loop all players:
+		loop-player has permission "*"
+		send "%{_p}% CHEATING" to console
+		send "{@prefix} &x&d&b&d&5&c&3Игрок &x&9&D&0&0&0&0&o%{_p}% &x&d&b&d&5&c&3нарушил &x&7&C&1&B&1&B%{_reason}%! &x&d&b&d&5&c&3[%{_value}%] " to loop-player
+	{@mv} > -1
+	{_p} doesn't have permission "mrac.bypass"
+	{mrac::banned::%uuid of {_p}%} is not true
+	set {mrac::banned::%uuid of {_p}%} to true
+	set {-bandelay::%uuid of {_p}%} to now
+	send title "&4&l&kBANNNNNNNNNNNNNNNN" to {_p}
+	apply blindness to {_p} for 2 seconds
+	play sound "ui.toast.challenge_complete" with pitch 0.1 to {_p}
+	loop 13 times:
+		wait 0.05 seconds
+		send "&4&l&kBANNNNNNNNNNNNNNNN" to {_p}
+	broadcast "&f"
+	broadcast " &x&9&D&0&0&0&0▎ &x&d&b&d&5&c&3Игрок &x&9&D&0&0&0&0&o%{_p}% &x&d&b&d&5&c&3заблокирован &x&9&D&0&0&0&0системой защиты"
+	broadcast "&x&9&D&0&0&0&0 ▎ &x&d&b&d&5&c&3за &x&9&D&0&0&0&0подозрение в читах."
+	broadcast "&f"
+	kick {_p} due to "{@banmsg}"
+		
+on join:
+	if {-ac_chance::%uuid of player%} is not set:
+		set {-ac_chance::%uuid of player%} to 0
+	{mrac::banned::%uuid of player%} is set
+	{mrac::banned::%uuid of player%} is true
+	kick player due to "{@banmsg}"
+on join:
+	if {-ac_lastviol::%uuid of player%} is not set:
+		set {-ac_lastviol::%uuid of player%} to "None"
+
+on inventory close:
+	set metadata value "ac_gui1" of event-player to 0
+	set metadata value "ac_gui2" of event-player to 0
+on leave:
+	set metadata value "ac_gui1" of event-player to 0
+	set metadata value "ac_gui2" of event-player to 0
+function openReportGui(p: player, a: player):
+	open chest inventory with 4 rows named "&0&l&nMRAC ➡ Reports&r" to {_p}
+	set metadata value "ac_gui2" of {_p} to 1
+	set {_x} to -1
+	loop 5 times:
+		add 1 to {_x}
+		set slot {_x} of {_p}'s current inventory to black stained glass pane named "&f "
+	set slot 9 of {_p}'s current inventory to black stained glass pane named "&f "
+	set slot 17 of {_p}'s current inventory to black stained glass pane named "&f "
+	loop 4 times:
+		add 1 to {_x}
+		set slot {_x} of {_p}'s current inventory to black stained glass pane named "&f "
+	set {_x} to 26
+	loop 9 times:
+		add 1 to {_x}
+		set slot {_x} of {_p}'s current inventory to red stained glass pane named "&f "
+	set slot 20 of {_p}'s current inventory to golden apple of unbreaking named "&6&l ✖ &c&oREPORT FOR KILLAURA&r" with lore "&f" and "&6&l ▸ &x&d&b&d&5&c&3Click to complete report"
+	set slot 21 of {_p}'s current inventory to feather of unbreaking named "&6&l ✖ &c&oREPORT FOR FLIGHT&r" with lore "&f" and "&6&l ▸ &x&d&b&d&5&c&3Click to complete report"
+	set slot 22 of {_p}'s current inventory to command block of unbreaking named "&6&l ✖ &c&oREPORT FOR SPEEDHACK&r" with lore "&f" and "&6&l ▸ &x&d&b&d&5&c&3Click to complete report"
+	set slot 13 of {_p}'s current inventory to totem of undying of unbreaking named "&6&l ✖ &c&oOTHER REASON&r" with lore "&f" and "&6&l ▸ &x&d&b&d&5&c&3Click to complete report"
+	set slot 23 of {_p}'s current inventory to end crystal of unbreaking named "&6&l ✖ &c&oREPORT FOR HITREACH&r" with lore "&f" and "&6&l ▸ &x&d&b&d&5&c&3Click to complete report"
+	set slot 24 of {_p}'s current inventory to string of unbreaking named "&6&l ✖ &c&oREPORT FOR ANTIKB&r" with lore "&f" and "&6&l ▸ &x&d&b&d&5&c&3Click to complete report"
+on inventory click:
+	metadata value "ac_gui2" of event-player is 1
+	if clicked slot is 20, 21, 22, 13, 23 or 24:
+		make player swing main hand
+		cancel event
+		close inventory of player
+		set {-ac_playervoted::%uuid of player%} to now
+		send "{@prefix} &x&d&b&d&5&c&3Thank for your report! System will spectate violator. "
+		set {-ac_lastcheck::%uuid of {-ac_playervoting::%uuid of player%}%} to now
+		add 5 to {-ac_chance::%uuid of {-ac_playervoting::%uuid of player%}%}
+		set {-ac_target::%uuid of {-ac_playervoting::%uuid of player%}%} to now
+		if clicked slot is 20:
+			if {-ac_lastviol::%uuid of {-ac_playervoting::%uuid of player%}%} = "KillAura":
+				add 5.69 to {-ac_chance::%uuid of {-ac_playervoting::%uuid of player%}%}
+			set {-ac_suspicion::%uuid of {-ac_playervoting::%uuid of player%}%} to "KillAura"
+		if clicked slot is 21:
+			if {-ac_lastviol::%uuid of {-ac_playervoting::%uuid of player%}%} = "Flight":
+				add 5.69 to {-ac_chance::%uuid of {-ac_playervoting::%uuid of player%}%}
+			set {-ac_suspicion::%uuid of {-ac_playervoting::%uuid of player%}%} to "Flight"
+		if clicked slot is 22:
+			if {-ac_lastviol::%uuid of {-ac_playervoting::%uuid of player%}%} = "SpeedHack":
+				add 5.69 to {-ac_chance::%uuid of {-ac_playervoting::%uuid of player%}%}
+			set {-ac_suspicion::%uuid of {-ac_playervoting::%uuid of player%}%} to "SpeedHack"
+		if clicked slot is 13:
+			add 5 to {-ac_chance::%uuid of {-ac_playervoting::%uuid of player%}%}
+			set {-ac_suspicion::%uuid of {-ac_playervoting::%uuid of player%}%} to "Other"
+		if clicked slot is 23:
+			if {-ac_lastviol::%uuid of {-ac_playervoting::%uuid of player%}%} = "HitReach":
+				add 5.69 to {-ac_chance::%uuid of {-ac_playervoting::%uuid of player%}%}
+			set {-ac_suspicion::%uuid of {-ac_playervoting::%uuid of player%}%} to "HitReach"
+		if clicked slot is 24:
+			if {-ac_lastviol::%uuid of {-ac_playervoting::%uuid of player%}%} = "NoVelocity":
+				add 5.69 to {-ac_chance::%uuid of {-ac_playervoting::%uuid of player%}%}
+			set {-ac_suspicion::%uuid of {-ac_playervoting::%uuid of player%}%} to "NoVelocity"
+		loop all players:
+			loop-player has permission "{@np}"
+			send "{@prefix} &x&d&b&d&5&c&3Player &4%{-ac_playervoting::%uuid of player%}% &x&d&b&d&5&c&3reported by &4%player%&x&d&b&d&5&c&3 due to &4%{-ac_suspicion::%uuid of {-ac_playervoting::%uuid of player%}%}% " to loop-player
+	else:
+		cancel event
+command /ankaalgoritm [<text>] [<offlineplayer>]:
+	permission: {@ap}
+	permission message: &cNot enough permissions.
+	trigger:
+		if arg-2 is set:
+			if arg-1 is "unban":
+				set {mrac::banned::%uuid of arg-2%} to false
+				set {-ac_chance::%uuid of arg-2%} to 0
+				send "&cUnbanned."
+			if arg-1 is "gui":
+				open chest inventory with 6 rows named "&0&l&n&kX &r&0&l&nMRAC&r" to player
+				set metadata value "ac_gui1" of player to 1
+				set {_x} to -1
+				loop 4 times:
+					add 1 to {_x}
+					set slot {_x} of player's current inventory to black stained glass pane named "&f "
+				if {-ac_chance::%uuid of arg-2%} < 50:
+					set {_e} to "&a%{-ac_chance::%uuid of arg-2%}%"
+				if {-ac_chance::%uuid of arg-2%} >= 50:
+					set {_e} to "&e%{-ac_chance::%uuid of arg-2%}%"
+				if {-ac_chance::%uuid of arg-2%} >= 80:
+					set {_e} to "&c%{-ac_chance::%uuid of arg-2%}%"
+				if {-ac_chance::%uuid of arg-2%} >= 90:
+					set {_e} to "&4%{-ac_chance::%uuid of arg-2%}%"
+				if {-ac_target::%uuid of arg-2%} is set:
+					set {_b} to "&4YES, Spectating by MRAC System"
+				else:
+					set {_b} to "&eНет"
+				set slot 4 of player's current inventory to crying obsidian named "&6&l ✖ &c&o%arg-2%&r" with lore "&f", "&6&l ▸ &x&d&b&d&5&c&3Шанс читерства: %{_e}%％", "&6&l ▸ &x&d&b&d&5&c&3Послед. нарушение: &4%{-ac_lastviol::%uuid of arg-2%}%" and "&6&l ▸ &x&d&b&d&5&c&3Жалобы: %{_b}%"
+				add 1 to {_x}
+				loop 4 times:
+					add 1 to {_x}
+					set slot {_x} of player's current inventory to black stained glass pane named "&f "
+				set {_v} to 18
+				loop 55 times:
+					name of inventory of player is "&0&l&n&kX &r&0&l&nMRAC&r"
+					wait 0.1 second
+					add 1 to {_v}
+					{-guiviols::%uuid of arg-2%::%{_v}%} is set
+					set slot {_v}-1 of player's current inventory to lava bucket named {-guiviols::%uuid of arg-2%::%{_v}%} with lore "&7" and "&c&l! &fCoordinates - &a%{-guiviols::%uuid of arg-2%::xyz::%{_v}%}%"
+		else:
+			send "{@prefix} &r&7Use /ankaalgoritm <unban/gui> <player>"
+		
+on inventory click:
+	if metadata value "ac_gui1" of player = 1:
+		cancel event
+		
+		
+#------------------------
+
+
+
+#𝚅𝚊𝚛𝚒𝚊𝚋𝚕𝚎𝚜, 𝚍𝚘 𝚗𝚘𝚝 𝚌𝚑𝚊𝚗𝚐𝚎 𝚟𝚊𝚕𝚞𝚎𝚜
+on join:
+	set {-guivcount::%uuid of player%} to 18
+	set {-scftp::%uuid of player%} to false
+	set {-bandelay::%uuid of player%} to now
+	set {-anka::hitreach::trackerval::%uuid of player%} to 0
+	set {-viols::%uuid of player%} to 0
+	set {-violsaim::%uuid of player%} to 0
+	set {-banviol::%uuid of player%} to 0
+	set {-cpsviols::%uuid of player%} to 0
+	set {-tri::%uuid of player%} to now
+	set {-lastdistat::%uuid of player%} to location of player
+	set {-lastc::%uuid of player%} to now
+	set {-violspeed::%uuid of player%} to 0
+	set {-agr::%uuid of player%} to 0
+	set {-nat::%uuid of player%} to 0
+	set {-ch::%uuid of player%} to now
+	set {-jesdetct::%uuid of player%} to 0
+	set {-slb::%uuid of player%} to now
+	set {-bowviol::%uuid of player%} to 0
+	set {-timelast::%uuid of player%} to now
+on quit:
+	clear {-guiviols::%uuid of player%::*}
+	clear {-guiviols::%uuid of player%::xyz::*}
+	delete {-guivcount::%uuid of player%}
+	delete {-violsaim::%uuid of player%}
+	delete {-oldpitch::%player's uuid%}
+	delete {-oldpitchtime::%player's uuid%}
+	delete {-newpitch::%player's uuid%}
+	delete {-newpitchtime::%player's uuid%}
+	delete {-scftp::%uuid of player%}  
+	delete {-timelast::%uuid of player%}
+	delete {-bandelay::%uuid of {_p}%}
+	delete {-banviol::%uuid of player%}
+	delete {-anka::hitreach::trackerval::%uuid of player%}
+	delete {-viols::%uuid of player%}
+	delete {-cpsviols::%uuid of player%} 
+	delete {-tri::%uuid of player%}
+	delete {-lastdistat::%uuid of player%}
+	delete {-lastc::%uuid of player%}
+	delete {-violspeed::%uuid of player%}
+	delete {-agr::%uuid of player%}
+	delete {-nat::%uuid of player%}
+	delete {-ch::%uuid of player%} 
+	delete {-jesdetct::%uuid of player%}
+	delete {-slb::%uuid of player%} 
+	delete {-bowviol::%uuid of player%}
+	delete {-lastpos::%uuid of player%}
+	delete {-safeloc::%uuid of player%}
+	delete {-thits::%player's uuid%}
+	delete {-nof::%uuid of player%}
+	
+	
+	
+#-------------- cutted temp. -----------------
+	
+
+
+
+
+
+#raven xray ai sect
+
+
+
+
+on join:
+	if {suspiciouslast::%uuid of player%} is set:
+		difference between {suspiciouslast::%uuid of player%} and now > 6 hours
+		set {suspicious::%uuid of player%} to 0
+	{suspicious::%uuid of player%} is not set
+	set {suspiciouslast::%uuid of player%} to now
+	set {suspicious::%uuid of player%} to 0
+on join:
+	{xraymined::%uuid of player%} is not set
+	set {xraymined::%uuid of player%} to 0
+	set {xraymined25m::%uuid of player%} to now
+on join:
+	player has permission "*"
+	set {suspicious::%uuid of player%} to 0
+
+
+#-----------------
+on break:
+	loop {-ac_xray_oreplace::%uuid of player%::*}:
+		location of loop-value is location of event-block
+		stop
+	past event-block's type is diamond ore, ancient debris, iron ore, deepslate diamond ore, deepslate iron ore or gold ore
+	if difference between now and {xraymined25m::%uuid of player%} is more than 25 minutes:
+		set {xraymined25m::%uuid of player%} to now
+		set {xraymined::%uuid of player%} to 0
+	else:
+		add 1 to {xraymined::%uuid of player%}
+	difference between {-ac_xray_findtime::%uuid of player%} and now < 2.8 minutes
+	distance between {-ac_xray_ore::%uuid of player%} and event-block > 10
+	loop all blocks in radius 4 of player:
+		loop-block is air
+		loop-block is not water
+		add 1 to {_x}
+	{_x} < 31
+	add 3 to {-ac_xray_viols::%uuid of player%}
+	if {-ac_xray_viols::%uuid of player%} >= 9:
+		remove 9 from {-ac_xray_viols::%uuid of player%} 
+		add 1 to {suspicious::%uuid of player%}
+		set {suspiciouslast::%uuid of player%} to now
+		if {suspicious::%uuid of player%} >= 1:
+			loop all players:
+				{moder::%loop-player%} is true
+				send "&r⤷ &x&d&b&d&5&c&3Алгоритмы заметили подозрительную активность игрока &7%player% &8(XRay):" to loop-player
+				send "&f" to loop-player
+				send " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3Количество накопанной руды за послед. 25 мин: &7%{xraymined::%uuid of player%}%" to loop-player
+				send " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3При повторном подозрении, игрок будет немедленно заблокирован!" to loop-player
+				send "&7%player% Xray suspicion" to console
+		if {suspicious::%uuid of player%} >= 3:
+			set {suspicious::%uuid of player%} to 0
+			execute console command "tempban %player% 31 days"
+			
+
+on break:
+	past event-block's type is not diamond ore, ancient debris, iron ore, deepslate diamond ore, deepslate iron ore or gold ore
+	if difference between {-ac_xray_findtime::%uuid of player%} and now > 4.4 minutes:
+		delete {-ac_xray_blocks::%uuid of player%}
+		{-ac_xray_viols::%uuid of player%} > 0
+		remove 1 from  {-ac_xray_viols::%uuid of player%}
+on break:
+	past event-block's type is diamond ore, ancient debris, iron ore, deepslate diamond ore, deepslate iron ore or gold ore
+	if difference between {-ac_xray_findtime::%uuid of player%} and now > 4.4 minutes:
+		delete {-ac_xray_blocks::%uuid of player%}
+
+	if {-ac_xray_ore::%uuid of player%} is set:
+		if distance between {-ac_xray_ore::%uuid of player%} and event-block < 7:
+			stop
+	y-coordinate of player < 40
+	{-ac_xray_blocks::%uuid of player%} is not set
+	loop all blocks in radius 4 of player:
+		loop-block is air
+		loop-block is not water
+		add 1 to {_x}
+	{_x} < 37
+	set {_f} to random integer between 1 and 4
+	set {_1} to random integer between 5 and 10
+	set {_2} to random integer between 2 and 8
+	if {_f} = 1:
+		make player see block {_1} west {_2} south player as past event-block
+		make player see block {_1} west {_2} south 1 above player as past event-block
+		add block {_1} west {_2} south of player to {-ac_xray_blocks::%uuid of player%::*}
+	if {_f} = 2:
+		make player see block {_1} east {_2} south player as past event-block
+		make player see block {_1} east {_2} south 1 above player as past event-block
+		add block {_1} east {_2} south of player to {-ac_xray_blocks::%uuid of player%::*}
+	if {_f} = 3:
+		make player see block {_1} north {_2} west player as past event-block
+		make player see block {_1} north {_2} west 1 above player as past event-block
+		add block {_1} north {_2} west of player to {-ac_xray_blocks::%uuid of player%::*}
+	if {_f} = 4:
+		make player see block {_1} north {_2} west player as past event-block
+		make player see block {_1} north {_2} west 1 above player as past event-block
+		make player see block {_1} north {_2} west 1 east player as past event-block
+		add block {_1} north {_2} west of player to {-ac_xray_blocks::%uuid of player%::*}
+	set {-ac_xray_ore::%uuid of player%} to location of event-block
+	set {-ac_xray_findtime::%uuid of player%} to now
+	add 1 to {-ac_xray_viols::%uuid of player%}
+on leave:
+	#clear {-ac_xray_viols::%uuid of player%}
+	clear {-ac_xray_findtime::%uuid of player%}
+	clear {-ac_xray_ore::%uuid of player%}
+	clear {-ac_xray_blocks::%uuid of player%::*}
+	clear {-ac_xray_oreplace::%uuid of player%::*}
+on break:
+	if difference between {-ac_xray_findtime::%uuid of player%} and now < 3 minutes:
+		y-coordinate of player < 40
+		loop {-ac_xray_blocks::%uuid of player%::*}:
+			if location of loop-value is location of event-block:
+				make player see event-block as event-block
+				remove loop-value from {-ac_xray_blocks::%uuid of player%}
+				add 3 to {-ac_xray_viols::%uuid of player%}
+				if difference between {-ac_xray_findtime::%uuid of player%} and now < 2.7 minutes:
+					add 2 to {-ac_xray_viols::%uuid of player%}
+				if difference between {-ac_xray_findtime::%uuid of player%} and now < 1.5 minutes:
+					add 1 to {-ac_xray_viols::%uuid of player%}
+				set {_r} to 1
+			else if location above event-block is location of loop-value:
+				make player see event-block as event-block
+				remove loop-value from {-ac_xray_blocks::%uuid of player%}
+				add 3 to {-ac_xray_viols::%uuid of player%}
+				if difference between {-ac_xray_findtime::%uuid of player%} and now < 2.7 minutes:
+					add 2 to {-ac_xray_viols::%uuid of player%}
+				if difference between {-ac_xray_findtime::%uuid of player%} and now < 1.5 minutes:
+					add 1 to {-ac_xray_viols::%uuid of player%}
+				set {_r} to 1
+		{_r} = 1
+		set {-ac_xray_ore::%uuid of player%} to location of event-block
+		set {-ac_xray_findtime::%uuid of player%} to now
+		set {_f} to random integer between 1 and 4
+		set {_1} to random integer between 5 and 10
+		set {_2} to random integer between 2 and 7
+		if {_f} = 1:
+			make player see block {_1} west {_2} south player as past event-block
+			make player see block {_1} west {_2} south 1 above player as past event-block
+			add block {_1} west {_2} south of player to {-ac_xray_blocks::%uuid of player%::*}
+		if {_f} = 2:
+			make player see block {_1} east {_2} south player as past event-block
+			make player see block {_1} east {_2} south 1 above player as past event-block
+			add block {_1} east {_2} south of player to {-ac_xray_blocks::%uuid of player%::*}
+		if {_f} = 3:
+			make player see block {_1} north {_2} west player as past event-block
+			make player see block {_1} north {_2} west 1 above player as past event-block
+			add block {_1} north {_2} west of player to {-ac_xray_blocks::%uuid of player%::*}
+		if {_f} = 4:
+			make player see block {_1} north {_2} west player as past event-block
+			make player see block {_1} north {_2} west 1 above player as past event-block
+			make player see block {_1} north {_2} west 1 east player as past event-block
+			add block {_1} north {_2} west of player to {-ac_xray_blocks::%uuid of player%::*}
+		if {-ac_xray_viols::%uuid of player%} >= 9:
+			remove 9 from {-ac_xray_viols::%uuid of player%} 
+			add 1 to {suspicious::%uuid of player%}
+			set {suspiciouslast::%uuid of player%} to now
+			if {suspicious::%uuid of player%} >= 1:
+				loop all players:
+					{moder::%loop-player%} is true
+					send "&r⤷ &x&d&b&d&5&c&3Алгоритмы заметили подозрительную активность игрока &7%player% &8(XRay):" to loop-player
+					send "&f" to loop-player
+					send " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3Количество накопанной руды за послед. 25 мин: &7%{xraymined::%uuid of player%}%" to loop-player
+					send " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3При повторном подозрении, игрок будет немедленно заблокирован!" to loop-player
+					send "&7%player% Xray suspicion" to console
+			if {suspicious::%uuid of player%} >= 3:
+				set {suspicious::%uuid of player%} to 0
+				execute console command "tempban %player% 31 days"
+on place:
+	if event-block is diamond ore, ancient debris, iron ore, deepslate diamond ore, deepslate iron ore or gold ore:
+		add event-block to {-ac_xray_oreplace::%uuid of player%::*}

@@ -1,0 +1,1817 @@
+
+options:
+	prefix: ⤷&r
+	arrow: ⤷
+	rp: https://drive.google.com/uc?export=download&id=1Ux6DNyxPIwP-NPe6AT-a_l7gdx3f88yq
+	motd: &x&F&F&E&7&C&C&l⋉ &x&F&C&E&5&C&8&lН&x&F&A&E&4&C&6&lА&x&F&8&E&3&C&4&lЗ&x&F&6&E&1&C&2&lВ&x&F&5&E&0&C&0&lА&x&F&3&D&F&B&E&lН&x&F&1&D&E&B&C&lИ&x&E&F&D&D&B&A&lЕ &x&E&C&D&B&B&7&lС&x&E&A&D&A&B&5&lЕ&x&E&8&D&9&B&3&lР&x&E&7&D&8&B&1&lВ&x&E&5&D&6&A&F&lЕ&x&E&3&D&5&A&D&lР&x&E&1&D&4&A&B&lА &x&D&E&D&2&A&7&l⋊
+		
+#Ban kick & mute Service
+command /kick [<offlineplayer>] [<text>]:
+	usage: /kick игрок причина
+	aliases: aveui:kick
+	trigger:
+		set {_v} to executor
+		if executor is not a player:
+			set {_v} to "&aConsole"
+		else:
+			player doesn't have permission "avpack.moder"
+			stop
+		arg-1 is set
+		if arg-1 doesn't have permission "*":
+			if arg-2 is set:
+				kick arg-1 due to colored arg-2
+				broadcast "&f"
+				broadcast " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3Игрок &7%arg 1%&x&d&b&d&5&c&3 кикнут с сервера."
+				broadcast " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3Причина: &7%arg 2% &x&C&6&9&5&9&5(Оператор: %{_v}%)"
+				broadcast "&f"
+			else:
+				kick arg-1
+				broadcast "&f"
+				broadcast " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3Игрок &7%arg 1%&x&d&b&d&5&c&3 кикнут с сервера."
+				broadcast " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3Причина: &7Не Указана &x&C&6&9&5&9&5(Оператор: %{_v}%)"
+				broadcast "&f"
+
+
+command /ban [<offlineplayer>] [<text>]:
+	usage: /ban игрок причина
+	aliases: aveui:ban
+	trigger:
+		set {_v} to executor
+		if executor is not a player:
+			set {_v} to "&aConsole"
+		else:
+			player doesn't have permission "avpack.moder"
+			stop
+		arg-1 is set
+		if arg-1 doesn't have permission "*":
+			if arg-2 is set:
+				kick arg-1 due to arg-2
+				ban arg-1 due to arg-2
+				broadcast "&f"
+				broadcast " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3Игрок &7%arg 1%&x&d&b&d&5&c&3 &cбыл заблокирован."
+				broadcast " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3Причина: &7%arg 2% &x&C&6&9&5&9&5(Оператор: %{_v}%)"
+				broadcast "&f"
+			else:
+				kick arg-1
+				ban arg-1
+				broadcast "&f"
+				broadcast " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3Игрок &7%arg 1%&x&d&b&d&5&c&3 &cбыл заблокирован."
+				broadcast " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3Причина: &7Не Указана &x&C&6&9&5&9&5(Оператор: %{_v}%)"
+				broadcast "&f"
+command /tempban [<offlineplayer>] [<timespan>]:
+	usage: /tempban игрок время(1 hour, 2 hours)
+	aliases: aveui:tempban
+	trigger:
+		set {_v} to executor
+		if executor is not a player:
+			set {_v} to "&aConsole"
+		else:
+			player doesn't have permission "avpack.moder"
+			stop
+		arg-1 is set
+		if arg-1 doesn't have permission "*":
+			if arg-2 is set:
+				kick arg-1
+				ban arg-1 for arg-2
+				broadcast "&f"
+				broadcast " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3Игрок &7%arg 1%&x&d&b&d&5&c&3 &cбыл заблокирован."
+				broadcast " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3На срок: &7%arg 2% &x&C&6&9&5&9&5(Оператор: %{_v}%)"
+				broadcast "&f"
+			else:
+				kick arg-1
+				ban arg-1
+				broadcast "&f"
+				broadcast " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3Игрок &7%arg 1%&x&d&b&d&5&c&3 &cбыл заблокирован."
+				broadcast " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3На срок: &7%arg 2% &x&C&6&9&5&9&5(Оператор: %{_v}%)"
+				broadcast "&f"
+command /unban [<offlineplayer>]:
+	aliases: aveui:unban
+	trigger:
+		set {_v} to executor
+		if executor is not a player:
+			set {_v} to "&aConsole"
+		else:
+			player doesn't have permission "avpack.moder"
+			stop
+		arg-1 is set
+		unban arg-1
+		send "{@prefix}&x&d&b&d&5&c&3 Игрок разблокирован."
+
+
+
+variables:
+	{mutted::%player%} = false
+	{mutmsg.%player%} = false
+on join:
+	{mutted::%player%} is not set
+	set {mutted::%player%} to false
+command /mute [<offlineplayer>] [<text>]:
+	usage: /mute игрок причина
+	aliases: aveui:mute
+	trigger:
+		set {_v} to executor
+		if executor is not a player:
+			set {_v} to "&aConsole"
+		else:
+			player doesn't have permission "avpack.moder"
+			stop
+		arg-1 is set
+		if arg-2 is set:
+			set {_a} to arg-2
+		else:
+			set {_a} to "&7Не Указана"
+		set {mut.reason.%player%} to {_a}
+		set {mut.blocked.%player%} to arg-1
+		set {mut.exc.%player%} to player
+		set {mut.tti.%arg-1%} to now
+		set {mutmsg.%player%} to true
+		send "{@prefix}&x&d&b&d&5&c&3 Теперь напишите в чат время мута - пример &730 minute/1 hour/1 day"
+		send " &7   Если желаете отменить мут, напишите в чат cancel"
+		if executor is not a player:
+			broadcast "&f"
+			broadcast " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3Игроку &7%arg 1%&x&d&b&d&5&c&3 &cвыдана блокировка чата."
+			broadcast " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3Причина: &7%{_a}% &x&C&6&9&5&9&5(Оператор: &aConsole)"
+			broadcast "&f"
+			set {mutted::%arg 1%} to true
+			
+on chat:
+	{mutmsg.%player%} is true
+	cancel event
+	if message is "cancel":
+		set {mutmsg.%player%} to false
+		stop
+	set {muttime.%{mut.blocked.%player%}%} to message parsed as timespan
+	set {mutted::%{mut.blocked.%player%}%} to true
+	set {mutmsg.%player%} to false
+	broadcast "&f"
+	broadcast " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3Игроку &7%{mut.blocked.%player%}%&x&d&b&d&5&c&3 &cвыдана блокировка чата."
+	broadcast " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3Причина: &7%{mut.reason.%player%}% &x&C&6&9&5&9&5(Оператор: &7%player%;&x&C&6&9&5&9&5 Время: &7%message%)"
+	broadcast "&f"
+command /unmute [<offlineplayer>]:
+	usage: /unmute игрок
+	aliases: aveui:unmute
+	trigger:
+		set {_v} to executor
+		if executor is not a player:
+			set {_v} to "&aConsole"
+		else:
+			player doesn't have permission "avpack.moder"
+			stop
+		arg-1 is set
+		set {mutted::%arg 1%} to false
+		set {mutmsg.%player%} to false
+		send "&r⤷ &x&d&b&d&5&c&3Вас размутили." to arg-1
+		send "{@prefix}&x&d&b&d&5&c&3 С игрока (%arg-1%) снята блокировка чата."
+on chat:
+	if {mutted::%player%} = true:
+		send "&r⤷ &x&d&b&d&5&c&3Вам заблокирован доступ к чату."
+
+		
+		
+#Backups service
+#
+
+
+command /removeallbackups:
+	aliases: aveui:removeallbackups
+	trigger:
+		player has permission "*"
+		send "{@prefix}&x&d&b&d&5&c&3 Все бекапы сервера удалены."
+		loop {savehistory::*}:
+			delete world "%loop-value%"	
+		clear {savehistory::*}
+	
+	
+	
+command /autobackup [<text>]:
+	aliases: aveui:autobackup
+	trigger:
+		player has permission "*"
+		if arg-1 is "on":
+			set {autobackup} to true
+			send "{@prefix}&x&d&b&d&5&c&3 Автоматические бекапы включены (интервал 2.3 часов)"
+		if arg-1 is "off":
+			set {autobackup} to false
+			send "{@prefix}&x&d&b&d&5&c&3 Автоматические бекапы выключены"
+
+command /manualbackup:
+	aliases: aveui:manualbackup
+	trigger:
+		executor has permission "*"
+		createbackup()
+
+		
+every 2.3 hours:
+	{autobackup} is true
+	createbackup()
+		
+function createbackup():
+	set {_p} to 0
+	loop 30 times:
+		wait 1 ticks
+		add 1 to {_p}
+		if {_p} = 1:
+			send actionbar "画 &x&F&F&F&F&F&FС&x&D&6&D&2&C&Eо&x&A&D&A&4&9&Dх&x&9&D&9&2&8&9р&x&9&D&9&2&8&9а&x&9&D&9&2&8&9н&x&9&D&9&2&8&9я&x&9&D&9&2&8&9е&x&9&D&9&2&8&9м&x&9&D&9&2&8&9 &x&9&D&9&2&8&9м&x&9&D&9&2&8&9и&x&9&D&9&2&8&9р" to all players
+		if {_p} = 2:
+			send actionbar "画 &x&9&D&9&2&8&9С&x&C&6&B&F&B&Aо&x&E&F&E&D&E&Bх&x&E&7&E&4&E&2р&x&B&E&B&6&B&0а&x&9&D&9&2&8&9н&x&9&D&9&2&8&9я&x&9&D&9&2&8&9е&x&9&D&9&2&8&9м&x&9&D&9&2&8&9 &x&9&D&9&2&8&9м&x&9&D&9&2&8&9и&x&9&D&9&2&8&9р" to all players
+		if {_p} = 3:
+			send actionbar "画 &x&9&D&9&2&8&9С&x&9&D&9&2&8&9о&x&9&D&9&2&8&9х&x&B&6&A&D&A&7р&x&D&E&D&B&D&8а&x&F&7&F&6&F&5н&x&C&E&C&8&C&4я&x&A&5&9&B&9&3е&x&9&D&9&2&8&9м&x&9&D&9&2&8&9 &x&9&D&9&2&8&9м&x&9&D&9&2&8&9и&x&9&D&9&2&8&9р" to all players
+		if {_p} = 4:
+			send actionbar "画 &x&9&D&9&2&8&9С&x&9&D&9&2&8&9о&x&9&D&9&2&8&9х&x&9&D&9&2&8&9р&x&9&D&9&2&8&9а&x&A&5&9&B&9&3н&x&C&E&C&9&C&4я&x&F&7&F&6&F&5е&x&D&E&D&B&D&8м&x&B&6&A&D&A&7 &x&9&D&9&2&8&9м&x&9&D&9&2&8&9и&x&9&D&9&2&8&9р" to all players
+		if {_p} = 5:
+			send actionbar "画 &x&9&D&9&2&8&9С&x&9&D&9&2&8&9о&x&9&D&9&2&8&9х&x&9&D&9&2&8&9р&x&9&D&9&2&8&9а&x&9&D&9&2&8&9н&x&9&D&9&2&8&9я&x&9&D&9&2&8&9е&x&B&E&B&6&B&0м&x&E&7&E&4&E&2 &x&E&F&E&D&E&Bм&x&C&6&B&F&B&Aи&x&9&D&9&2&8&9р" to all players
+		if {_p} = 6:
+			send actionbar "画 &x&9&D&9&2&8&9С&x&9&D&9&2&8&9о&x&9&D&9&2&8&9х&x&9&D&9&2&8&9р&x&9&D&9&2&8&9а&x&9&D&9&2&8&9н&x&9&D&9&2&8&9я&x&9&D&9&2&8&9е&x&9&D&9&2&8&9м&x&9&D&9&2&8&9 &x&A&D&A&4&9&Dм&x&D&6&D&2&C&Eи&x&F&F&F&F&F&Fр" to all players
+			set {_p} to 0
+	send actionbar "&f" to all players
+	duplicate world "world" using name "world_backup_%{backups}+1%"
+	add 1 to {backups}
+	if {bckupedalready} is false:
+		set {bckupedalready} to true
+	else:
+		add "world_backup_%{backups}%" to {savehistory::*}
+
+
+#Optimization Service
+#
+#----------------------------------------------
+
+
+
+
+
+command /list:
+	aliases: listplayers, playerlist, aveui:list
+	permission: *
+	trigger:
+		send "&6 ▎ &fКоличество игроков на сервере: &a%online player count%"
+		send "&6 ▎ &f"
+		loop all players:
+			send "&6 ▎ &f%loop-player% &7(%location of loop-player%)" to sender
+		
+command /itemdb:
+	aliases: /iteminfo, /infoitem, aveui:itemdb
+	trigger:
+		executor is a player
+		send "&F"
+		send "&6 ▎ &fКод предмета: &a%raw name of tool of player% &7(ID)"
+		if max durability of player's tool is not 0:
+			send "&6 ▎ &fМаксимальная прочность: &a%max durability of player's tool%"
+		send "&6 ▎ &fМаксимальный размер стака: &a%max stack size of player's tool%"
+		send "&f"
+		
+		
+		
+#------------------------------------------------------
+import:
+	java.lang.management.ManagementFactory
+	javax.management.ObjectName
+
+ 
+function getCpuLoad() :: number:
+    set {_objectName} to ObjectName.getInstance("java.lang:type=OperatingSystem")
+    set {_factory} to ManagementFactory.getPlatformMBeanServer()
+    set {_attributeList} to {_factory}.getAttributes({_objectName}, ["ProcessCpuLoad" as String])
+    return {_attributeList}.get(0).getValue()
+ 
+function getFreeMemory() :: number:
+	set {_fm} to difference between max memory/(1024*1024) and used memory of server/(1024*1024)
+	return {_fm}
+
+#------------------------------------------------------
+on script load:
+	set {-gcinfo} to "&aИдеально"
+	set {-apprx} to 0
+
+command /gc:
+	aliases: aveui:gc
+	trigger:
+		set {_v} to executor
+		if executor is not a player:
+			set {_v} to "&aConsole"
+		else:
+			player doesn't have permission "avpack.moder"
+			stop
+		send "&f"
+		send "&6 ▎ &6∾ &x&d&b&d&5&c&3Время работы сервера: &a%uptime of server%"
+		send "&6 ▎ &6∾ &x&d&b&d&5&c&3ТПС Сервера: %{-gcinfo}%"
+		send "&6 ▎ &f"
+		send "&6 ▎ &6■ &x&d&b&d&5&c&3Ядра ЦП: &a%amount of processor cores% ядер" 
+		send "&6 ▎ &6↳ &x&d&b&d&5&c&3Использование ЦП: &a%getCpuLoad()*100%％"
+		send "&6 ▎ &f"
+		send "&6 ▎ &6∫ &x&d&b&d&5&c&3Свободная память: &a%getFreeMemory()%MB" 
+		send "&6 ▎ &6∫ &x&d&b&d&5&c&3Использованная память: &a%used memory of server/(1024*1024)%MB"
+		send "&f"
+every tick:
+	set {_cpuload} to getCpuLoad()*100
+	if {_cpuload} > 31:
+		if {cpuload} > 59:
+			{-apprx} > -51
+			remove 2 from {-apprx}
+		else:
+			{-apprx} > -51
+			remove 2 from {-apprx}
+	else:
+		{-apprx} < 66
+		add 1 to {-apprx} 
+
+
+	
+every 1.6 seconds:
+	if {-apprx} > -1:
+		if {-apprx} < 34:
+			set {-gcinfo} to "&6Стабильно"
+			set {-gcpro} to "&6%random number between 18.98 and 19.3% ↓"
+		else:
+			set {-gcinfo} to "&aИдеально"
+			set {-gcpro} to "&a%random number between 19.98 and 20% ↑"
+	else:
+		if {-apprx} > -27:
+			set {-gcinfo} to "&cПлохо"
+			set {-gcpro} to "&c%{-currenttps}% ↓"
+		else:
+			set {-gcinfo} to "&4Очень плохо"
+			set {-gcpro} to "&4%{-currenttps}% ↓"
+			
+command /chatclear:
+	aliases: aveui:clearchat
+	trigger:
+		set {_v} to executor
+		if executor is not a player:
+			set {_v} to "&aConsole"
+		else:
+			player doesn't have permission "avpack.moder"
+			stop
+		loop 40 times:
+			broadcast "&f "
+		send "&r⤷ &x&d&b&d&5&c&3Глобальный чат очищен администратором &a%executor%"
+		
+		
+#Whitelist service
+#
+
+
+variables:
+	{wh.%player%} = false
+	{wh} = false
+
+command /whitelist [<text>] [<offlineplayer>]:
+	aliases: wl, aveui:whitelist
+	trigger:
+		set {_v} to executor
+		if executor is not a player:
+			set {_v} to "&aConsole"
+		else:
+			player doesn't have permission "avpack.moder"
+			stop
+		if arg-1 is set:
+			if arg-1 is "on":
+				set {wh} to true
+				send "{@prefix} &x&d&b&d&5&c&3Вайтлист был успешно &aвключен!"
+				stop
+			if arg-1 is "off":
+				set {wh} to false
+				send "{@prefix} &x&d&b&d&5&c&3Вайтлист был успешно &cвыключен!"
+				stop
+			if arg-1 is "list":
+				set {_a} to -1
+				loop {whl::*}:
+					wait a tick
+					{_vg.%loop-index%} is not set
+					set {_vg.%loop-index%} to 5
+					loop-value is true
+					add 1 to {_a} 
+					send formatted "&c&l%{_a}% &r&7▎ %loop-index% &8 <tooltip:&7Клик><sgt:/wl remove %loop-index%>&x&F&F&0&0&0&0&o[&x&E&F&0&5&0&5&oУ&x&D&F&0&A&0&A&oд&x&C&F&0&F&0&F&oа&x&C&0&1&5&1&5&oл&x&B&0&1&A&1&A&oи&x&A&0&1&F&1&F&oт&x&9&0&2&4&2&4&oь&x&8&0&2&9&2&9&o]<r>"
+				stop
+			if arg-2 is not set:
+				send "{@prefix} &x&d&b&d&5&c&3Используйте команды: &a/wl <on/off/add/remove/list> <игрок>"
+			else:
+				if arg-1 is "add":
+					set {wh.%arg-2%} to true
+					set {whl::%arg-2's name%} to true
+					send "{@prefix} &x&d&b&d&5&c&3Игрок &a%arg-2% &x&d&b&d&5&c&3успешно добавлен в вайтлист."
+				if arg-1 is "remove":
+					set {wh.%arg-2%} to false
+					set {whl::%arg-2's name%} to false
+					send "{@prefix} &x&d&b&d&5&c&3Игрок &c%arg-2% &x&d&b&d&5&c&3успешно удалён из вайтлиста."
+
+on join:
+	{wh} = true
+	{wh.%player%} = false
+	kick the player due to "&x&6&B&F&F&0&0&oВ&x&6&E&F&E&0&7&oы&x&7&2&F&E&0&D&o &x&7&5&F&D&1&4&oн&x&7&9&F&C&1&A&oе&x&7&C&F&B&2&1&o &x&8&0&F&B&2&7&oн&x&8&3&F&A&2&E&oа&x&8&7&F&9&3&4&oх&x&8&A&F&8&3&B&oо&x&8&E&F&8&4&1&oд&x&9&1&F&7&4&8&oи&x&9&5&F&6&4&F&oт&x&9&8&F&5&5&5&oе&x&9&C&F&5&5&C&oс&x&9&F&F&4&6&2&oь&x&A&3&F&3&6&9&o &x&A&6&F&2&6&F&oв&x&A&A&F&2&7&6&o &x&A&D&F&1&7&C&oв&x&B&1&F&0&8&3&oа&x&B&4&E&F&8&9&oй&x&B&8&E&F&9&0&oт&x&B&B&E&E&9&6&oл&x&B&F&E&D&9&D&oи&x&C&2&E&C&A&4&oс&x&C&6&E&C&A&A&oт&x&C&9&E&B&B&1&oе&x&C&D&E&A&B&7&o &x&D&0&E&9&B&E&oс&x&D&4&E&9&C&4&oе&x&D&7&E&8&C&B&oр&x&D&B&E&7&D&1&oв&x&D&E&E&6&D&8&oе&x&E&2&E&6&D&E&oр&x&E&5&E&5&E&5&oа%nl%&x&9&6&9&6&9&6&oО&x&9&9&9&9&9&9&oб&x&9&C&9&C&9&C&oр&x&9&F&9&F&9&F&oа&x&A&3&A&3&A&3&oт&x&A&6&A&6&A&6&oи&x&A&9&A&9&A&9&oт&x&A&C&A&C&A&C&oе&x&A&F&A&F&A&F&oс&x&B&2&B&2&B&2&oь&x&B&6&B&6&B&6&o &x&B&9&B&9&B&9&oк&x&B&C&B&C&B&C&o &x&B&F&B&F&B&F&oа&x&C&2&C&2&C&2&oд&x&C&5&C&5&C&5&oм&x&C&9&C&9&C&9&oи&x&C&C&C&C&C&C&oн&x&C&F&C&F&C&F&oи&x&D&2&D&2&D&2&oс&x&D&5&D&5&D&5&oт&x&D&8&D&8&D&8&oр&x&D&C&D&C&D&C&oа&x&D&F&D&F&D&F&oц&x&E&2&E&2&E&2&oи&x&E&5&E&5&E&5&oи"
+	
+	
+#TAB Service
+#
+#------------------------
+on load:
+	set {tabstep} to 0
+	
+every 13 seconds:
+	{tabstep} = 0
+	set {tabstep} to 1
+	wait 4 seconds
+	set {tabstep} to 0
+on join:
+	while player is online:
+		wait 1 seconds
+		if online player count > 0:
+			set {_1} to random integer between 1 and 2 
+			if {_1} = 1:
+				set {_1h} to "&8-"
+			else:
+				set {_1h} to "&80"
+			set {_2} to random integer between 1 and 2 
+			if {_2} = 1:
+				set {_2h} to "&8-"
+			else:
+				set {_2h} to "&80"
+		if player is online:
+			if {tabstep} = 0:
+				set {_a} to {-currenttps}
+				if {_a} >= 0:
+					set {_it} to "&4%{_a}% ↓"
+				if {_a} >= 12.4:
+					set {_it} to "&c%{_a}% ↓"
+				if {_a} >= 15:
+					set {_it} to "&x&7&F&C&B&6&5%{_a}% ↓"
+				if {_a} >= 18.9:
+					set {_it} to "&a%{_a}% ↑"
+				#Верхний таб. вид1
+				set player's tablist header to "&r鞸%nl%&f  %nl%&f  %nl%&f %nl%&f %nl%&f%nl%&f %{_1h}%     &x&d&b&d&5&c&3Онлайн: &a☺%online player count%   &8<>    &x&d&b&d&5&c&3ТПС: %{_it}%     &3%{_2h}% %nl%&f%nl%&f"
+			else:
+				#Верхний таб. вид2
+				set player's tablist header to "&r鞸%nl%&f  %nl%&f  %nl%&f %nl%&f %nl%&f%nl%&f %{_1h}%     &x&E&5&C&E&C&0В&x&E&7&D&2&C&6р&x&E&A&D&7&C&Bе&x&E&C&D&B&D&1м&x&E&E&E&0&D&7я &x&F&3&E&9&E&2м&x&F&6&E&D&E&8и&x&F&8&F&2&E&Eр&x&F&A&F&6&F&4а&x&F&D&F&B&F&9: %time of player's world%     &3%{_2h}% %nl%&f%nl%&f"
+			set player's tablist footer to "&f %nl% %nl% &x&d&b&d&5&c&3Желаем приятной игры! 礈%nl%&8 %nl% &8"
+			if player is online:
+				if world of player is "world":
+					set {_t} to team named "e-team"
+				if world of player is "world_the_end":
+					set {_t} to team named "f-team"
+				if world of player is "world_nether":
+					set {_t} to team named "g-team"
+				if {-afkmode::%uuid of player%} is set:
+					set {_t} to team named "k-team"
+				if {hideworld::%uuid of player%} is 1:
+					set {_t} to team named "w-team"
+				if {entered::%uuid of player%} is false:
+					set {_t} to team named "z-team"
+				add player to {_t}
+				add {_p} to team entries of {_t}
+				if player is online:
+					if world of player is "world":
+						set {_te} to "&x&d&b&d&5&c&3 ☀"
+					if world of player is "world_the_end":
+						set {_te} to "&x&d&b&d&5&c&3 🧪"
+					if world of player is "world_nether":
+						set {_te} to "&x&d&b&d&5&c&3 🔥"
+					if {hideworld::%uuid of player%} is 1:
+						set {_te} to ""
+					if {-afkmode::%uuid of player%} is set:
+						set {_te} to "&x&8&2&0&8&F&B&r&x&d&b&d&5&c&3 ☽"
+					if {ankgroups::%{ankpg::%player's name%}%::suffix} is "$world":
+						set player's tablist name to colored "&r%{ankgroups::%{ankpg::%player's name%}%::prefix}%&x&F&C&F&1&E&1%{nick::%player%}%&r%{_te}%"
+					else:
+						set player's tablist name to colored "&r%{ankgroups::%{ankpg::%player's name%}%::prefix}%&x&F&C&F&1&E&1%{nick::%player%}%&r%{ankgroups::%{ankpg::%player's name%}%::suffix}%"
+			if {-mt} is set:
+				send actionbar "&x&F&B&0&8&0&8Т&x&F&B&1&7&1&7Е&x&F&B&2&5&2&5Х&x&F&C&3&4&3&4Н&x&F&C&4&2&4&2И&x&F&C&5&1&5&1Ч&x&F&C&5&F&5&FЕ&x&F&D&6&E&6&EС&x&F&D&7&C&7&CК&x&F&D&8&B&8&BИ&x&F&D&9&9&9&9Е &x&F&E&B&6&B&6Р&x&F&E&C&5&C&5А&x&F&E&D&3&D&3Б&x&F&F&E&2&E&2О&x&F&F&F&0&F&0Т&x&F&F&F&F&F&FЫ" to player
+			{spymode::%player%} is set
+			{spymode::%player%} is true
+			set {_a} to random integer between 1 and 2
+			if {_a} = 1:
+				send actionbar "&x&F&B&0&8&0&8Р&x&E&D&0&D&0&DЕ&x&E&0&1&2&1&2Ж&x&D&2&1&6&1&6И&x&C&5&1&B&1&BМ &x&A&A&2&5&2&5С&x&9&C&2&A&2&AЛ&x&8&F&2&F&2&FЕ&x&8&1&3&3&3&3Ж&x&7&4&3&8&3&8К&x&6&6&3&D&3&DИ" to player
+			else:
+				send actionbar "&x&F&F&F&F&F&FР&x&F&3&F&1&F&1Е&x&E&8&E&4&E&4Ж&x&D&C&D&6&D&6И&x&D&1&C&8&C&8М &x&B&A&A&D&A&DС&x&A&E&A&0&A&0Л&x&A&3&9&2&9&2Е&x&9&7&8&4&8&4Ж&x&8&C&7&7&7&7К&x&8&0&6&9&6&9И" to player
+			
+on load:
+
+	set team suffix of team named "e-team" to "&x&d&b&d&5&c&3 ☀"
+	set team suffix of team named "f-team" to "&x&d&b&d&5&c&3 🧪"
+	set team suffix of team named "g-team" to "&x&d&b&d&5&c&3  🔥 "
+	set team suffix of team named "h-team" to "&c 🔑 "
+	set team suffix of team named "w-team" to "&f "
+	set team suffix of team named "k-team" to "&x&8&2&0&8&F&B&r&x&d&b&d&5&c&3 ☽"
+
+
+		
+#Motd Service
+#
+
+
+on server ping:
+	#НАЗВАНИЕ ТУТ --
+	set {_e} to "{@motd}"
+	set {_b} to 1
+	set {_b} to random integer between 1 and 2
+	if {_b} = 1:
+		set {_b} to "&7             А ты уже принял Сопроводителя?                  "
+	if {_b} = 2:
+		set {_b} to "&7             нью вегас это наше будущее!                  "
+	set motd to "                 %{_e}%&r          %newline% %{_b}%                "
+	
+	
+
+#Join & Quit Services
+#
+#---------------------------
+
+on join:
+	set {_d} to text from url "https://vpnapi.io/api/%IP of player%?key=79752a261a6944acb962bf764ba797e0"
+	wait 1.4 seconds
+	if {_d} contains "TCPSHIELD":
+		loop all players:
+			if loop-player has permission "*":
+				send "{@prefix} &x&d&b&d&5&c&3%player% зашел &x&d&b&d&5&c&3(TCPShield)" to loop-player
+			else:
+				if player has permission "avpack.moder":
+					send "{@prefix} &x&d&b&d&5&c&3%player% зашел &x&d&b&d&5&c&3(TCPShield)" to loop-player
+		stop
+	else:
+		#execute console command "kick %player% Обход ДДОС Защиты"
+	if {_d} contains "Russia":
+		set {_i} to "Россия"
+	if {_d} contains "Ukraine":
+		set {_i} to "Украина"
+	if {_d} contains "Belarus":
+		set {_i} to "Беларусь"
+	if {_d} contains "Latvia":
+		set {_i} to "Латвия"
+	if {_i} is not set:
+		set {_i} to "Не СНГ"
+	if {_d} contains """vpn"": false,":
+		set {_v} to "&mВПН"
+	if {_d} contains """vpn"": true,":
+		set {_v} to "&4ВПН"
+		execute console command "kick %player% Использование ВПН"
+	loop all players:
+		if loop-player has permission "*":
+			send "{@prefix} &x&d&b&d&5&c&3%player% зашел &x&d&b&d&5&c&3(%{_i}%&7; %{_v}%&x&d&b&d&5&c&3)" to loop-player
+		else:
+			if player has permission "avpack.moder":
+				send "{@prefix} &x&d&b&d&5&c&3%player% зашел &x&d&b&d&5&c&3(%{_i}%&7; %{_v}%&x&d&b&d&5&c&3)" to loop-player
+				
+on join with priority monitor:
+	if world of player is "world":
+		set {_t} to team named "e-team"
+	if world of player is "world_the_end":
+		set {_t} to team named "f-team"
+	if world of player is "world_nether":
+		set {_t} to team named "g-team"
+
+	add player to {_t}
+	if {wh} = true:
+		if {wh.%player%} = true:
+			set join message to "&r可 %{ankgroups::%{ankpg::%player's name%}%::prefix}%&f%player% &x&d&b&d&5&c&3зашёл на сервер."
+		else:
+			set join message to "&r可 %{ankgroups::%{ankpg::%player's name%}%::prefix}%&f%player% &x&d&b&d&5&c&3пытается войти обходя вайтлист."
+	else:
+		set join message to "&r可 %{ankgroups::%{ankpg::%player's name%}%::prefix}%&f%player% &x&d&b&d&5&c&3зашёл на сервер."
+		
+on quit:
+	set quit message to "&r⤷ %{ankgroups::%{ankpg::%player's name%}%::prefix}%&f%player% &x&d&b&d&5&c&3вышел с сервера."
+	add 1 to {quitcounter::%uuid of player%}
+	set {quittime::%uuid of player%} to now
+on join:
+	{quittime::%uuid of player%} is set
+	if difference between {quittime::%uuid of player%} and now > 19 seconds:
+		set {quitcounter::%uuid of player%} to 0
+	else:
+		{quitcounter::%uuid of player%} > 5
+		if {quitcounter::%uuid of player%} > 5:
+			y-coordinate of player < 30
+			add 2 to {-ac_xray_viols::%uuid of player%} 
+		set {quitcounter::%uuid of player%} to 0
+		execute console command "tempban %player% 5 minutes"
+		
+
+# Chat Services
+#
+#---------------------------
+
+command /soundall [<text>]:
+	aliases: aveui:soundall
+	trigger:
+		set {_v} to executor
+		if executor is not a player:
+			set {_v} to "&aConsole"
+		else:
+			player doesn't have permission "avpack.moder"
+			stop	
+		if arg-1 is "zefirsong":
+			play sound "axyela" for all players
+			stop
+		play sound "%arg-1%" for all players
+		
+command /updrp:
+	aliases: aveui:updrp
+	trigger:	
+		set {_v} to executor
+		if executor is not a player:
+			set {_v} to "&aConsole"
+		else:
+			player doesn't have permission "avpack.moder"
+			stop	
+		send "&r{@arrow} &x&d&b&d&5&c&3Обнаружено обновление ресурспака, необходимо принять.." to all players
+		wait 3 seconds
+		loop all players:
+			set {_p} to loop-player
+			{_p}.setResourcePack("{@rp}")
+
+command /tmp:
+	aliases: aveui:tmp
+	trigger:
+		send "&7&x&F&C&C&F&8&B&oС&x&F&A&D&0&8&F&oТ&x&F&9&D&0&9&3&oА&x&F&7&D&1&9&7&oТ&x&F&6&D&1&9&B&oИ&x&F&4&D&2&9&F&oС&x&F&2&D&3&A&3&oТ&x&F&1&D&3&A&7&oИ&x&E&F&D&4&A&A&oК&x&E&E&D&5&A&E&oА&x&E&C&D&5&B&2&o &x&E&B&D&6&B&6&oН&x&E&9&D&6&B&A&oА&x&E&7&D&7&B&E&oИ&x&E&6&D&8&C&2&oГ&x&E&5&D&8&C&3&oР&x&E&4&D&8&C&0&oА&x&E&3&D&7&B&E&oН&x&E&3&D&7&B&B&oН&x&E&2&D&7&B&9&oО&x&E&1&D&6&B&6&oГ&x&E&1&D&6&B&3&oО&x&E&0&D&6&B&1&o &x&D&F&D&6&A&E&oВ&x&D&E&D&5&A&C&oР&x&D&E&D&5&A&9&oЕ&x&D&D&D&5&A&7&oМ&x&D&C&D&5&A&4&oЕ&x&D&C&D&4&A&2&oН&x&D&B&D&4&9&F&oИ:"
+		send "&f"
+		set {_a} to -1
+		loop {whl::*}:
+			{_vg.%loop-index%} is not set
+			set {_vg.%loop-index%} to 5
+			set {_x} to "%loop-index%" parsed as offlineplayer
+			add time played of {_x} to {_bk::*}
+			set {_ux} to time played of {_x} 
+			set {_bj::%{_ux}%} to {_x}
+		set {_top::*} to sorted indices of {_bk::*} in descending order
+		loop 10 times:
+			add {_top::%loop-value%} to {_top_10::*}
+		set {_n} to 0
+		loop {_top_10::*}:
+			add 1 to {_n}
+			set {_reg} to "%{_bk::%{_top_10::%{_n}%}%}%."
+			replace all "minutes" in {_reg} with "минут" 
+			replace all "and" in {_reg} with "и" 
+			replace all "minute" in {_reg} with "минут" 
+			replace all "hours" in {_reg} with "часов" 
+			replace all "hour" in {_reg} with "часов" 
+			replace all "days" in {_reg} with "дней" 
+			replace all "day" in {_reg} with "дней" 
+			replace all "seconds" in {_reg} with "секунд" 
+			send " &4▎ &f%{_bj::%{_bk::%{_top_10::%{_n}%}%}%}% &7- &f&o%{_reg}%&r &8(№%{_n}%)" to player
+		send "&f "
+		
+		
+		
+#
+#
+#
+
+on join:
+	wait 7 seconds
+	if {latermsg::%player%} is set:
+		
+		send "{@arrow} &x&d&b&d&5&c&3Вас не было в сети, игрок %{latermsg::%player%::sender}% оставил вам отложенное сообщение:"
+		send "&f"
+		send " &x&9&1&0&D&0&D▎ &r&x&d&b&d&5&c&3%{latermsg::%player%}%"
+		send "&f"
+		delete {latermsg::%player%}
+		delete {latermsg::%player%::sender}
+		
+command /msg [<offlineplayer>] [<text>]:
+	aliases: m, tell, aveui:msg
+	trigger:
+		if {mutted::%player%} is true:
+			send "{@arrow} &x&d&b&d&5&c&3Действие не может быть выполнено"
+			stop
+		{blocklc::%uuid of arg-1%} is not set
+		if arg-2 is set:
+			if arg-1 is online:
+				send "&x&b&9&1&6&f&b&l✉ &f&nЯ&r &7- &f&n%arg 1%&r&7&l: &x&d&b&d&5&c&3&o%arg 2%" to player
+				send formatted "&x&b&9&1&6&f&b&l✉ &f&n%player%&r &7- &f&nЯ&r&7&l: &x&d&b&d&5&c&3&o%arg 2% <tooltip:&7Клик><sgt:/msg %player% >&x&F&C&C&F&8&B&o[&x&F&7&D&1&9&8&oО&x&F&2&D&3&A&4&oт&x&E&D&D&5&B&1&oв&x&E&8&D&7&B&E&oе&x&E&4&D&8&C&0&oт&x&E&2&D&7&B&8&oи&x&D&F&D&6&A&F&oт&x&D&D&D&5&A&7&oь&x&D&B&D&4&9&F&o]<r>" to arg-1
+				send action bar "&7Новое сообщение" to arg-1
+				wait 0.3 second
+				send action bar "&x&d&b&d&5&c&3Новое сообщение" to arg-1
+				wait 0.3 second
+				send action bar "&7Новое сообщение" to arg-1
+				wait 0.3 second
+				send action bar "&x&d&b&d&5&c&3Новое сообщение" to arg-1
+				wait 0.3 second
+				send action bar "&7Новое сообщение" to arg-1
+			else:
+				set {latermsg::%arg 1%} to arg-2
+				set {latermsg::%arg 1%::sender} to player
+				send "{@arrow} &x&d&b&d&5&c&3Игрока нет в сети, мы пометили сообщение как отложенное. (автоматически отправим игроку когда он зайдет.)" to sender
+		else:
+			send "&r{@arrow} &x&d&b&d&5&c&3Команда: &a/msg [игрок] [текст]"
+command /tell [<offlineplayer>] [<text>]:
+	trigger:
+		if {mutted::%player%} is true:
+			send "{@arrow} &x&d&b&d&5&c&3Действие не может быть выполнено"
+			stop
+		{blocklc::%uuid of arg-1%} is not set
+		if arg-2 is set:
+			if arg-1 is online:
+				send "&x&b&9&1&6&f&b&l✉ &f&nЯ&r &7- &f&n%arg 1%&r&7&l: &x&d&b&d&5&c&3&o%arg 2%" to player
+				send formatted "&x&b&9&1&6&f&b&l✉ &f&n%player%&r &7- &f&nЯ&r&7&l: &x&d&b&d&5&c&3&o%arg 2% <tooltip:&7Клик><sgt:/msg %player% >&x&F&C&C&F&8&B&o[&x&F&7&D&1&9&8&oО&x&F&2&D&3&A&4&oт&x&E&D&D&5&B&1&oв&x&E&8&D&7&B&E&oе&x&E&4&D&8&C&0&oт&x&E&2&D&7&B&8&oи&x&D&F&D&6&A&F&oт&x&D&D&D&5&A&7&oь&x&D&B&D&4&9&F&o]<r>" to arg-1
+				send action bar "&7Новое сообщение" to arg-1
+				wait 0.3 second
+				send action bar "&x&d&b&d&5&c&3Новое сообщение" to arg-1
+				wait 0.3 second
+				send action bar "&7Новое сообщение" to arg-1
+				wait 0.3 second
+				send action bar "&x&d&b&d&5&c&3Новое сообщение" to arg-1
+				wait 0.3 second
+				send action bar "&7Новое сообщение" to arg-1
+			else:
+				set {latermsg::%arg 1%} to arg-2
+				set {latermsg::%arg 1%::sender} to player
+				send "{@arrow} &x&d&b&d&5&c&3Игрока нет в сети, мы пометили сообщение как отложенное. (автоматически отправим игроку когда он зайдет.)" to sender
+		else:
+			send "&r{@arrow} &x&d&b&d&5&c&3Команда: &a/msg [игрок] [текст]"
+			
+command /enderchest [<offlineplayer>]:
+	aliases: ec, aveui:ec
+	permission: anka
+	trigger:
+		open ender chest of arg-1 to player
+		send "{@prefix} &x&d&b&d&5&c&3Вы просматриваете эндер-сундук игрока &a%arg 1%"
+command /invsee [<offlineplayer>]:
+	aliases: inv, aveui:invsee
+	permission: anka
+	trigger:
+		if arg-1 is online:
+			open inventory of arg to player
+			send "{@prefix} &x&d&b&d&5&c&3Вы редактируете инвентарь игрока &a%arg 1%"
+
+
+
+
+
+
+# chat
+#
+#
+#
+
+on chat:
+	cancel event
+	{pv::%uuid of player%} is not set
+	if {mutted::%player%} is true:
+		set {_c} to difference between {mut.tti.%player%} and now
+		if {_c} is more than {muttime.%player%}:
+			execute console command "unmute %player%"
+	{mutted::%player%}  is false
+	{mutmsg.%player%} is false
+	{-avoperation::%uuid of player%::a} is not set
+	difference between {entertime::%uuid of player%} and now > 1 second
+	{entered::%uuid of player%} is true
+	{spymode::%player%} is false
+	set {_f} to colored message
+	loop all players:
+		set {_esss} to loop-player
+		if {_f} contains "@%{_esss}%":
+			replace "@%{_esss}%" in {_f} with "&c&l@%{_esss}%&f"
+			play sound "block.note_block.chime" to the loop-player
+
+	replace "!" in {_f} with ""
+	if player's world is "world":
+		set {_w} to "☀"
+	if player's world is "world_nether":
+		set {_w} to "🔥"
+	if player's world is "world_the_end":
+		set {_w} to "&5🧪"
+	if {hideworld::%uuid of player%} is set:
+		set {_w} to ""
+	set {_fa} to ""
+	if {nick::%player%} != name of player:
+		set {_fa} to formatted "<tooltip:&c%sender%><sgt:  >&c&l* <r>"
+	replace ":grib:" in {_f} with "礈"
+	replace ":mic:" in {_f} with "化"
+	replace "௵" in {_f} with " "
+	if message contains "!": 
+		send formatted "&r亚  %{ankgroups::%{ankpg::%player's name%}%::prefix}%%{_fa}%&f%{nick::%player%}%&7 %{_w}% &x&8&B&F&C&B&7沙 &f&o%{_f}%" to all players
+		send formatted "&r亚  %{ankgroups::%{ankpg::%player's name%}%::prefix}%%{_fa}%&f%{nick::%player%}%&7 %{_w}% &x&8&B&F&C&B&7沙 &f&o%{_f}%" to console
+	else:
+		loop all players in radius 75 of player:
+        	
+			send formatted "&rㄣ  %{ankgroups::%{ankpg::%player's name%}%::prefix}%%{_fa}%&f%{nick::%player%}%&7 %{_w}% &x&8&B&F&C&B&7沙 &f%{_f}%" to loop-player
+		send formatted "&rㄣ  %{ankgroups::%{ankpg::%player's name%}%::prefix}%%{_fa}%&f%{nick::%player%}%&7 %{_w}% &x&8&B&F&C&B&7沙 &f%{_f}%" to console
+		
+		
+command /action [<text>]:
+	aliases: /действие
+	trigger:
+		arg-1 is set
+		if {mutted::%player%} is true:
+			send "{@arrow} &x&d&b&d&5&c&3Действие не может быть выполнено"
+			stop
+		loop all players in radius 70 of player:
+			send "&r{@arrow} &f%player%: &x&d&b&d&5&c&3%arg 1% [&5Действие&f]&f" to loop-player
+command /try [<text>]:
+	aliases: /попробовать
+	trigger:
+		arg-1 is set
+		if {mutted::%player%} is true:
+			send "{@arrow} &x&d&b&d&5&c&3Действие не может быть выполнено"
+			stop
+		set {_e} to random integer between 0 and 1
+		if {_e} = 0:
+			loop all players in radius 75 of player:
+				send "&r{@arrow} &f%player%: &x&d&b&d&5&c&3%arg 1% [&aУспешно&f]&f" to loop-player
+		else:
+			loop all players in radius 75 of player:
+				send "&r{@arrow} &f%player%: &x&d&b&d&5&c&3%arg 1% [&cНеудачно&f]&f" to loop-player
+				
+				
+#
+#
+#sleep engine
+
+#------
+		
+variables:
+	{sleep} = 0
+	{sleep.%player%} = false
+	{changin} = false
+on script load:
+	set {sleep} to 0
+	set {changin} to false
+on leave:
+	if {sleep.%player%} = true:
+		set {sleep.%player%} to false
+		remove 1 from {sleep}
+
+	
+on bed enter:
+	if online player count <= 4:
+		if {sleep} < 0:
+			set {sleep} to 0
+		add 1 to {sleep}
+		set {sleep.%player%} to true
+		{changin} is false
+		set {changin} to true
+		wait 1.5 seconds
+		send actionbar "&x&d&b&d&5&c&3Ночь пропущена." to all players
+		set weather of world "world" to clear
+		loop all players:
+			play sound "ui.toast.challenge_complete" with pitch 1.5 to the loop-player
+		set {_a} to 0
+		set {_b} to 18
+		set time of world "world" to 18:00
+		loop 222 times:
+			time in world "world" is between 18:00 and 6:00
+			wait a tick
+			add 10 to {_a}
+			set time of world "world" to "%{_b}%:%{_a}%" parsed as time
+			if {_a} >= 60:
+				set {_a} to 0
+				add 1 to {_b}
+				if {_b} > 23:
+					set {_b} to 0
+		set {changin} to false
+		set {sleep} to 0
+	if online player count > 4:
+		if {sleep} < 0:
+			set {sleep} to 0
+		add 1 to {sleep}
+		set {sleep.%player%} to true
+		set {_on} to online player count
+		loop all players:
+			if {-afkmode::%uuid of loop-player%} is set:
+				remove 1 from {_on}
+		if {sleep} < round({_on}/3):
+			loop 6 times:
+				wait a tick
+				send actionbar "&x&d&b&d&5&c&3Необходимо минимум &f%round({_on}/3)%&x&d&b&d&5&c&3 игрока для пропуска ночи." to all players
+		else:
+			{changin} is false
+			set {changin} to true
+			wait 1.5 seconds
+			set weather of world "world" to clear
+			send actionbar "&x&d&b&d&5&c&3Ночь пропущена." to all players
+			loop all players:
+				play sound "ui.toast.challenge_complete" with pitch 0.9 to the loop-player
+			set {_a} to 0
+			set {_b} to 18
+			set time of world "world" to 18:00
+			loop 222 times:
+				time in world "world" is between 18:00 and 6:00
+				wait a tick
+				add 5 to {_a}
+				set time of world "world" to "%{_b}%:%{_a}%" parsed as time
+				if {_a} >= 60:
+					set {_a} to 0
+					add 1 to {_b}
+					if {_b} > 23:
+						set {_b} to 0
+			set {changin} to false
+			set {sleep} to 0
+on bed leave:
+	{sleep.%player%} is true
+	remove 1 from {sleep}
+	set {sleep.%player%} to false
+	
+#
+#----------------
+variables:
+	{rest} = false
+
+command /ankareload:
+	aliases: aveui:reload
+	trigger:
+		player has permission "anka"
+		execute console command "sk reload scripts"
+		
+		
+
+command /autobarriernow:
+	permission: *
+	trigger:
+		{barr} is true
+		set {bartime} to now
+		send "&fУспешно! Ждите следующего дня"
+command /autobarrier [<text>] [<text>]:
+	aliases: aveui:autobarrier
+	permission: *
+	trigger:
+		if arg-1 is not set:
+			send "&r{@arrow} &x&d&b&d&5&c&3/autobarrier на_сколько_увеличивать текущий_размер"
+			stop
+		if arg-1 is "off":
+			set {barr} to false
+			send "&r{@arrow} &x&d&b&d&5&c&3Удален автобарьер."
+		else:
+			set {baruv} to arg-1 parsed as number
+			set {barr} to true
+			set {barclassic} to arg-2 parsed as number
+			send "&r{@arrow} &x&d&b&d&5&c&3Установлено увеличение барьера на &a%arg 1% &x&d&b&d&5&c&3блок."
+			wait 1 second
+			send "&r{@arrow} &x&d&b&d&5&c&3Теперь, введите команду /autobarriernow чтобы установить время увеличения барьера на текущее время"
+			send  "&7(начиная с каждого след дня увеличиватся барьер будет в то время, когда вы ввели команду)"
+
+variables:
+	{barr} = false
+
+on script load:
+	set {barrchang} to false
+	
+every 15 second:
+	{barr} is true
+	{bartime} is set
+	{barrchang} is false
+	if difference between {bartime} and now > 23 hours and 59 minutes:
+		set {barrchang} to true
+		{barr} is true
+		set {bartime} to now
+		broadcast "&r{@arrow} &x&d&b&d&5&c&3Увеличение барьера произойдет через 1 минуту!"
+		wait 20 seconds
+		loop all players:
+			send title "" with subtitle "&fОжидание увеличения барьера.." to loop-player
+		wait 5 seconds
+		loop all players:
+			play sound "block.note_block.chime" with pitch 0.8 to the loop-player
+		wait 0.1 second
+		loop all players:
+			play sound "block.note_block.chime" with pitch 0.9 to the loop-player
+		wait 0.1 second
+		loop all players:
+			play sound "block.note_block.chime" with pitch 1 to the loop-player
+		wait 0.1 second
+		loop all players:
+			play sound "block.note_block.chime" with pitch 1.1 to the loop-player
+		wait 0.1 second
+		loop all players:
+			play sound "block.note_block.chime" with pitch 1.2 to the loop-player
+		wait 0.1 second
+		loop all players:
+			play sound "block.note_block.chime" with pitch 1.3 to the loop-player
+		wait 0.1 second
+		loop all players:
+			play sound "block.note_block.chime" with pitch 1.4 to the loop-player
+		set {_e} to {baruv}+{barclassic}
+		loop all players:
+			play sound "ui.toast.challenge_complete" with pitch 0.1 to the loop-player
+		loop all players:
+			send title "&c&lБАРЬЕР УВЕЛИЧЕН" with subtitle "&fТеперь его ширина - &a%{_e}%" to loop-player
+		broadcast "&r{@arrow} &x&d&b&d&5&c&3Размер барьера составит &a%{_e}% &x&d&b&d&5&c&3блок, увеличение произойдет в течении &a40 &x&d&b&d&5&c&3секунд."
+		execute console command "worldborder set %{baruv}+{barclassic}% 40"
+		add {baruv} to {barclassic}
+		wait 2 minutes
+		set {barrchang} to false
+
+
+
+#---------------
+
+
+command /hat:
+	aliases: aveui:hat
+	trigger:
+		send "{@arrow} &x&d&b&d&5&c&3Вы одели предмет."
+		player's helmet is air
+		set player's helmet to player's tool
+		if player's gamemode is survival or adventure:
+			remove player's tool from inventory of player
+on join:
+	if {vanish::%uuid of player%::status} is not set:
+		set {vanish::%uuid of player%::status} to false
+	if {vanish::%uuid of player%::status} = true:
+		wait 40 ticks
+		loop all players:
+			loop-value doesn't have permission "*"
+			add loop-value to {_vanish::*}
+		hide player from {_vanish::*}
+		send "{@arrow} &x&d&b&d&5&c&3У Вас включен режим невидимости, выключите его командой &a/v"	
+command /vanish:
+	aliases: v, aveui:v
+	trigger:
+		set {_v} to executor
+		if executor is not a player:
+			set {_v} to "&aConsole"
+		else:
+			player doesn't have permission "avpack.moder"
+			stop	
+		if {vanish::%uuid of player%::status} = false:
+			send "&f"
+			send "&6 ▎ &x&d&b&d&5&c&3Вы были"
+			send "&6 ▎ &7спрятаны &x&d&b&d&5&c&3от всех игроков."
+			send "&f"
+			set {vanish::%uuid of player%::status} to true
+			loop all players:
+				loop-value doesn't have permission "*"
+				add loop-value to {_vanish::*}
+			hide player from {_vanish::*}
+		else:
+			send "&f"
+			send "&6 ▎ &x&d&b&d&5&c&3Вы успешно отключили режим"
+			send "&6 ▎ &7невидимости."
+			send "&f"
+			set {vanish::%uuid of player%::status} to false
+			reveal player from all players
+			
+
+
+#------------
+on join:
+	{nick::%player%} is not set
+	set {nick::%player%} to name of player
+command /ankachangename [<offlineplayer>] [<text>]:
+	trigger:
+		set {_v} to executor
+		if executor is not a player:
+			set {_v} to "&aConsole"
+		else:
+			player doesn't have permission "avpack.moder"
+			stop	
+		set {nick::%arg 1%} to arg-2
+		send "{@arrow} &x&d&b&d&5&c&3Ник установлен."
+		if arg-2 = "clear":
+			set {nick::%arg 1%} to "%arg-1's name%"
+			
+#send title "礅௵௵௵௵௵௵௵" to player
+
+#----------------------
+
+import:
+	org.bukkit.entity.Player
+
+on join:
+	set {-rpload::%uuid of player%} to 0
+	set {_p} to player
+	{_p}.setResourcePack("{@rp}")
+
+on resource pack response:
+	if resource pack is declined:
+		kick the player due to "&x&F&C&4&A&4&A&oР&x&F&A&4&E&4&E&oа&x&F&8&5&2&5&3&oз&x&F&6&5&6&5&7&oр&x&F&4&5&A&5&B&oе&x&F&2&5&F&6&0&oш&x&F&0&6&3&6&4&oи&x&E&F&6&7&6&9&oт&x&E&D&6&B&6&D&oе &x&E&9&7&3&7&6&oр&x&E&7&7&7&7&A&oе&x&E&5&7&B&7&E&oс&x&E&3&8&0&8&3&oу&x&E&1&8&4&8&7&oр&x&D&F&8&8&8&B&oс&x&D&D&8&C&9&0&oп&x&D&B&9&0&9&4&oа&x&D&9&9&4&9&9&oк &x&D&5&9&C&A&1&oв &x&D&2&A&5&A&A&oн&x&D&0&A&9&A&E&oа&x&C&E&A&D&B&3&oс&x&C&C&B&1&B&7&oт&x&C&A&B&5&B&C&oр&x&C&8&B&9&C&0&oо&x&C&6&B&D&C&4&oй&x&C&4&C&2&C&9&oк&x&C&2&C&6&C&D&oа&x&C&0&C&A&D&1&oх &x&B&C&D&2&D&A&oс&x&B&A&D&6&D&E&oе&x&B&9&D&A&E&3&oр&x&B&7&D&E&E&7&oв&x&B&5&E&3&E&C&oе&x&B&3&E&7&F&0&oр&x&B&1&E&B&F&4&oа&x&A&F&E&F&F&9&o."
+	loop 50 times:
+		wait a second
+		resource pack is successfully load
+		send actionbar "&x&D&9&C&4&9&4Р&x&D&7&C&7&9&Aе&x&D&4&C&9&A&0с&x&D&2&C&C&A&6у&x&C&F&C&E&A&Bр&x&C&D&D&1&B&1с&x&C&A&D&4&B&7п&x&C&8&D&6&B&Dа&x&C&5&D&9&C&3к &x&C&1&D&E&C&Eз&x&B&E&E&1&D&4а&x&B&C&E&3&D&Aг&x&B&9&E&6&E&0р&x&B&7&E&9&E&6у&x&B&4&E&B&E&Cж&x&B&2&E&E&F&1е&x&A&F&F&0&F&7н" to player
+		wait 1.2 second
+		send actionbar "&f" to player
+		set {-rpload::%uuid of player%} to 1
+		stop
+on break:
+		{-rpload::%uuid of player%} != 1
+		#cancel event
+on player move:
+		{-rpload::%uuid of player%} != 1
+		#cancel event
+#-----------
+command /say [<text>]:
+	trigger:
+		if sender is a player:
+			send actionbar "&cДействие может быть выполнено только от консоли"
+		sender is console
+		broadcast "&r亚  &x&d&b&d&5&c&3Console&7 &x&8&B&F&C&B&7沙 &f&o%arg-1%"
+
+command /spit:
+	cooldown: 5 seconds
+	cooldown message: {@arrow} &x&d&b&d&5&c&3Действие можно выполнять каждые 5 секунд.
+	trigger:
+		set {_r} to 0
+		loop all entities in radius 6 of player:
+			distance between player and loop-entity > 0.01
+			loop-entity is a player
+			add 1 to {_r}
+			send actionbar "&x&d&b&d&5&c&3Плевок!"
+			play sound "entity.llama.spit" to loop-entity
+			play sound "entity.llama.spit" to sender
+			set {_v} to vector from head of player to head of loop-entity
+			set vector length of {_v} to 0.4
+			set {_l} to location of sender's head
+			loop (distance between {_l} and loop-entity's head) / 0.3 times:
+				wait a tick
+				draw 8 of dust using dustOption(white, 10) at {_l} with force
+				set {_l} to {_l} ~ {_v}
+			stop
+		if {_r} = 0:
+			send actionbar "&x&d&b&d&5&c&3Рядом никого."
+			
+#------
+on join:
+	if {messagescount::%uuid of player%} is -1:
+	#	execute console command "unmute %player%"
+		#set {messagescount::%uuid of player%} to 0
+	{messagescount::%uuid of player%} is not set
+	set {messagescount::%uuid of player%} to 0
+	set {lastmsg::%uuid of player%} to now
+on chat:
+	{entered::%uuid of player%} is true
+	if {lastmsgtext::%uuid of player%} is message:
+		{messagescount::%uuid of player%} > -1
+		add 1 to {messagescount::%uuid of player%}
+	set {lastmsg::%uuid of player%} to now
+	set {lastmsgtext::%uuid of player%} to message
+	if {lastmsg::%uuid of player%} is more than 5 seconds:
+		set {messagescount::%uuid of player%} to 0
+	else:
+		{messagescount::%uuid of player%} > 4
+		player doesn't have permission "avpack.moder"
+		set {messagescount::%uuid of player%} to -1
+		#execute console command "mute %player% Флуд"
+		#wait 3 minutes
+		#execute console command "unmute %player%"
+		#set {messagescount::%uuid of player%} to 0
+#---
+
+on join:
+	{spymode::%player%} is not set
+	set {spymode::%player%} to false
+command /spy [<player>]:
+	aliases: aveui:spy
+	trigger:
+		set {_v} to executor
+		if executor is not a player:
+			set {_v} to "&aConsole"
+		else:
+			player doesn't have permission "avpack.moder"
+			stop	
+		if {spymode::%player%} is false:
+			set {spylastloc::%uuid of player%} to location of player
+		set {spymode::%player%} to true
+		set gamemode of player to spectator
+		hide player from all players
+		send "&r⤷ &x&d&b&d&5&c&3Вы вошли в режим скрытого наблюдателя" 
+		send "&f" 
+		send " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3Вы скрыты от обычных игроков, включая таб." 
+		send " &x&9&1&0&D&0&D▎ &x&d&b&d&5&c&3Чтобы выйти из режима, напишите в чат любое сообщение"
+		wait 5 ticks
+		teleport player to arg-1
+		apply night vision to player for 9999 seconds 
+on chat:
+	{spymode::%player%} is true
+	set {spymode::%player%} to false
+	set gamemode of player to survival
+	teleport player to {spylastloc::%uuid of player%} 
+	reveal player from all players
+	remove night vision from player
+on quit:
+	{spymode::%player%} is true
+	set {spymode::%player%} to false
+	set gamemode of player to survival
+	teleport player to {spylastloc::%uuid of player%} 
+	reveal player from all players
+	remove night vision from player
+	
+#----------
+on right click:
+	player is sneaking
+	player's tool is not air
+	gamemode of player is survival
+	player's off hand tool is stick
+	distance between player and location of clicked block < 0.8
+	item amount of player's tool < 2
+	send actionbar "&x&F&F&F&F&F&FВ&x&F&9&F&8&F&8ы &x&E&D&E&A&E&Aу&x&E&7&E&2&E&2с&x&E&1&D&B&D&Bт&x&D&B&D&4&D&4а&x&D&5&C&D&C&Dн&x&C&F&C&6&C&6о&x&C&9&B&F&B&Fв&x&C&3&B&8&B&8и&x&B&C&B&0&B&0л&x&B&6&A&9&A&9и &x&A&A&9&B&9&Bп&x&A&4&9&4&9&4р&x&9&E&8&D&8&Dе&x&9&8&8&6&8&6д&x&9&2&7&E&7&Eм&x&8&C&7&7&7&7е&x&8&6&7&0&7&0т&x&8&0&6&9&6&9."
+	wait a tick
+	le spawn item display at player
+	set {_display} to last spawned entity
+	set display item of {_display} to player's tool
+	remove player's tool from inventory of player
+	set display view range of {_display} to 3
+	#set display left rotation of {_display} to quaternion(0,0.70,0.70,0)
+on leftclick:
+	player is sneaking
+	player's off hand tool is stick
+	loop all entities in radius 1.5 of clicked block:
+		loop-entity is not a player
+		loop-entity is not player
+		set {_e} to display item of loop-entity
+		give player {_e}
+		kill loop-entity
+		stop
+		
+#-----
+on death:
+	attacker is a player
+	victim is a player
+	set {_a} to random integer between 1 and 100
+	if {_a} <= 15:
+		give attacker victim's skull
+		 
+#------
+# Other Service
+
+on join:
+	{tntplaced::%player%} is not set
+	set {tntplaced::%player%} to 0
+	set {tntplacedlast::%player%} to now
+	set {tntsus::%player%} to 0
+
+
+on place of tnt:
+	if difference between {tntplacedlast::%player%} and now > 40 minutes:
+		set {tntplaced::%player%} to 1
+		set {tntplacedlast::%player%} to now
+		set {tntsus::%player%} to 0
+		set {tnttime::%player%} to 0
+		set {tntpcount::%player%} to 0
+		set {tntplc::%player%} to 0
+		set {tntonlp::%player%} to 0
+	else:
+		add 1 to {tntplaced::%player%}
+		if time played of player < 5.8 hours:
+			{tnttime::%player%} != 5
+			set {tnttime::%player%} to 5
+			add 3 to {tntsus::%player%}
+		loop all players in radius 50 of player:
+			add 1 to {_ebh}
+		if {_ebh} < 3:
+			{tntpcount::%player%} != 5
+			set {tntpcount::%player%} to 5
+			add 1 to {tntsus::%player%}
+		else:
+			remove 1 from {tntsus::%player%}
+		if online player count < 4:
+			{tntonlp::%player%} != 5
+			set {tntonlp::%player%} to 5
+			add 1 to {tntsus::%player%}
+		if {tntplaced::%player%} > 15:
+			{tntplc::%player%} != 5
+			set {tntplc::%player%} to 5
+			add 1 to {tntsus::%player%}
+		if {tntsus::%player%} >= 5:
+			set {tntsus::%player%} to 0
+			execute console command "ban %player% Гриферство выявлено алгоритмами"
+command /griefreport [<player>]:
+	aliases: aveui:griefreport
+	cooldown: 3 minutes
+	cooldown message: {@arrow} &x&d&b&d&5&c&3Репортить за гриферство можно каждые 3 минуты.
+	trigger:
+		{tntsus::%arg 1%} > 0
+		{tntplaced::%arg 1%} > 1
+		if {tntsus::%arg 1%} < 5:
+			add 1 to {tntsus::%arg 1%}
+			send actionbar "&x&d&b&d&5&c&3Ваша жалоба учтена." to player
+		if {tntsus::%arg 1%} >= 5:
+			set {tntsus::%arg 1%} to 0
+			execute console command "ban %arg 1% Гриферство выявлено алгоритмами"
+
+
+#----
+
+on chat:
+	{entered::%uuid of player%} is true
+	add message to {chathistory::%uuid of player%::*}
+on command:
+	{entered::%uuid of player%} is true
+	add complete command to {cmdh::%uuid of player%::*}
+	
+command /chathistory [<offlineplayer>]:
+	aliases: aveui:chathistory
+	trigger:
+		set {_v} to executor
+		if executor is not a player:
+			set {_v} to "&aConsole"
+		else:
+			player doesn't have permission "avpack.moder"
+			stop	
+		send "&r⤷ &x&d&b&d&5&c&3Загружаем историю чата игрока &7%arg-1%:"
+		send "&f"
+		loop {chathistory::%uuid of arg-1%::*}:
+			wait a tick
+			send " &x&9&1&0&D&0&D▎ &r&x&d&b&d&5&c&3%loop-value%" to player
+command /cmdhistory [<offlineplayer>]:
+	aliases: aveui:cmdhistory
+	trigger:
+		set {_v} to executor
+		if executor is not a player:
+			set {_v} to "&aConsole"
+		else:
+			player doesn't have permission "avpack.moder"
+			stop	
+		send "&r⤷ &x&d&b&d&5&c&3Загружаем историю команд игрока &7%arg-1%:"
+		send "&f"
+		loop {cmdh::%uuid of arg-1%::*}:
+			wait a tick
+			send " &x&9&1&0&D&0&D▎ &r&x&d&b&d&5&c&3/%loop-value%" to player
+			
+#-------
+
+
+on join:
+	set {-afktime::%uuid of player%} to now
+on player move:
+	set {-afktime::%uuid of player%} to now
+	set {_a} to {-afktime::%uuid of player%}
+	loop 180 times:
+		wait 1 second
+		if difference between {-afktime::%uuid of player%} and {_a} > 1 second:
+			delete {-afkmode::%uuid of player%}
+			stop 
+			
+		if loop-value > 170:
+			set {-afkmode::%uuid of player%} to 1
+on right click on player:
+	if {afkmode::%uuid of clicked entity%} is set:
+		le spawn text display 2 above clicked entity
+		set {_e} to last spawned text display
+		set display text of {_e} to "&x&8&2&0&8&F&BАФК"
+		set display billboard of {_e} to vertical
+		set display text shadowed of {_e} to false
+		set display default text background of {_e} to false
+		set display view range of {_e} to 10
+		set display text background color of {_e} to bukkitColor(0,0,0,0)
+		wait a tick
+		loop 50 times:
+			wait a tick
+			set display text opacity of {_e} to display text opacity of {_e} - 5
+		kill {_e}
+#----
+
+command /perms:
+	aliases: aveui:perms
+	trigger:
+		send "&r⤷ &x&d&b&d&5&c&3Ваши права на сервере:"
+		send "&f"
+		if player has permission "*":
+			send " &6▎ &x&d&b&d&5&c&3Вам доступны все команды. Вы владелец"
+		else:
+			player has permission "avpack.moder"
+			send " &6▎ &x&d&b&d&5&c&3/mute игрок причина"
+			send " &6▎ &x&d&b&d&5&c&3/unmute"
+			send " &6▎ &x&d&b&d&5&c&3/ban игрок причина"
+			send " &6▎ &x&d&b&d&5&c&3/tempban игрок время (1 hour, 50 minutes)"
+			send " &6▎ &x&d&b&d&5&c&3/unban"
+			send " &6▎ &x&d&b&d&5&c&3/kick игрок причина"
+			send " &6▎ &x&d&b&d&5&c&3/ankachangename игрок ник (поменять ник игроку)"
+			send " &6▎ &x&d&b&d&5&c&3/cmdhistory,/chathistory игрок"
+			send " &6▎ &x&d&b&d&5&c&3/spy игрок (режим слежки)"
+
+on damage:
+	attacker is phantom
+	kill attacker
+	cancel event
+	
+#-----
+on join:
+	set {-lastcosmetic::%uuid of player%} to now
+	set {-mushroom::%uuid of player%} to now
+on command:
+	complete command contains "me"
+	{mutted::%player%} is true
+	cancel event
+	
+
+	
+	
+
+command /maintenance [<text>]:
+	aliases: aveui:clearchat
+	trigger:
+		set {_v} to executor
+		if executor is not a player:
+			set {_v} to "&aConsole"
+		else:
+			player doesn't have permission "avpack.moder"
+			stop
+		if arg-1 is "on":
+			set {-mt} to true
+			loop all players:
+				loop-player doesn't have permission "avpack.moder"
+				kick loop-player due to "&x&F&B&0&8&0&8&oВ&x&F&B&1&2&1&2&oЕ&x&F&B&1&C&1&C&oД&x&F&B&2&6&2&6&oУ&x&F&C&3&0&3&0&oТ&x&F&C&3&9&3&9&oС&x&F&C&4&3&4&3&oЯ &x&F&C&5&7&5&7&oТ&x&F&C&6&1&6&1&oЕ&x&F&D&6&B&6&B&oХ&x&F&D&7&5&7&5&oН&x&F&D&7&F&7&F&oИ&x&F&D&8&8&8&8&oЧ&x&F&D&9&2&9&2&oЕ&x&F&D&9&C&9&C&oС&x&F&E&A&6&A&6&oК&x&F&E&B&0&B&0&oИ&x&F&E&B&A&B&A&oЕ &x&F&E&C&E&C&E&oР&x&F&E&D&7&D&7&oА&x&F&F&E&1&E&1&oБ&x&F&F&E&B&E&B&oО&x&F&F&F&5&F&5&oТ&x&F&F&F&F&F&F&oЫ"
+		else:
+			delete {-mt}
+on join:
+	{-mt} is set 
+	player doesn't have permission "avpack.moder"
+	kick player due to "&x&F&B&0&8&0&8&oВ&x&F&B&1&2&1&2&oЕ&x&F&B&1&C&1&C&oД&x&F&B&2&6&2&6&oУ&x&F&C&3&0&3&0&oТ&x&F&C&3&9&3&9&oС&x&F&C&4&3&4&3&oЯ &x&F&C&5&7&5&7&oТ&x&F&C&6&1&6&1&oЕ&x&F&D&6&B&6&B&oХ&x&F&D&7&5&7&5&oН&x&F&D&7&F&7&F&oИ&x&F&D&8&8&8&8&oЧ&x&F&D&9&2&9&2&oЕ&x&F&D&9&C&9&C&oС&x&F&E&A&6&A&6&oК&x&F&E&B&0&B&0&oИ&x&F&E&B&A&B&A&oЕ &x&F&E&C&E&C&E&oР&x&F&E&D&7&D&7&oА&x&F&F&E&1&E&1&oБ&x&F&F&E&B&E&B&oО&x&F&F&F&5&F&5&oТ&x&F&F&F&F&F&F&oЫ"
+command /ankaskull [<player>]:
+	permission: *
+	trigger:
+		give player skull of arg-1
+command /ipsee [<offlineplayer>]:
+    permission: *
+    trigger:
+        send {lastip::%uuid of arg-1%} 
+        send "&r⤷ &x&d&b&d&5&c&3Айпи: &a%ip of arg-1%"
+		
+command /sudo [<player>] [<text>]:
+	permission: *
+	trigger:
+		execute arg-1 command arg-2
+# Anka Chests & Other Security
+#----------------------------
+
+
+on join:
+	set {-chestsbroken::%uuid of player%} to 0
+	set {-chestviolates::%uuid of player%} to 0
+	set {-ignitetimes::%uuid of player%} to 0
+	set {-zabrokdchest::%uuid of player%} to false
+	set {-lstjointime::%uuid of player%} to now
+
+on break:
+	if difference between now and {-lstjointime::%uuid of player%} > 35 minutes:
+		set {-chestsbroken::%uuid of player%} to 0
+		set {-chestviolates::%uuid of player%} to 0
+		set {-ignitetimes::%uuid of player%} to 0
+		set {-zabrokdchest::%uuid of player%} to false
+		set {-lstjointime::%uuid of player%} to now
+	past event-block is chest
+	if time played of player is less than 5 hours:
+		add 1 to {-chestsbroken::%uuid of player%}
+		if time played of player is less than 38 minutes:
+			{-chestsbroken::%uuid of player%} > 4
+			if {-zabrokdchest::%uuid of player%} is false:
+				loop all players in radius 37 of player:
+					add 1 to {_f}
+				{_f} < 3
+				add 1 to {-chestviolates::%uuid of player%}
+			set {-zabrokdchest::%uuid of player%} to true
+	if {-chestviolates::%uuid of player%} > 1:
+		execute console command "ban %player% Заблокирован в целях безопасности алгоритмами"
+
+on block ignite:
+	if difference between now and {-lstjointime::%uuid of player%} > 35 minutes:
+		set {-chestsbroken::%uuid of player%} to 0
+		set {-chestviolates::%uuid of player%} to 0
+		set {-ignitetimes::%uuid of player%} to 0
+		set {-zabrokdchest::%uuid of player%} to false
+		set {-lstjointime::%uuid of player%} to now
+	add 1 to {-ignitetimes::%uuid of player%} 
+	if {-ignitetimes::%uuid of player%} > 3:
+		{-ignitetimes::%uuid of player%} < 100
+		set {-ignitetimes::%uuid of player%} to 999
+		add 1 to {-chestviolates::%uuid of player%}
+	if {-chestviolates::%uuid of player%} > 1:
+		execute console command "ban %player% Заблокирован в целях безопасности алгоритмами"
+
+on place:
+
+	event-block is lava
+	if difference between now and {-lstjointime::%uuid of player%} > 35 minutes:
+		set {-chestsbroken::%uuid of player%} to 0
+		set {-chestviolates::%uuid of player%} to 0
+		set {-ignitetimes::%uuid of player%} to 0
+		set {-zabrokdchest::%uuid of player%} to false
+		set {-lstjointime::%uuid of player%} to now
+	add 1 to {-ignitetimes::%uuid of player%} 
+	time played of player is less than 5 hours
+	if {-ignitetimes::%uuid of player%} >= 5:
+		{-ignitetimes::%uuid of player%} < 455
+		set {-ignitetimes::%uuid of player%} to 999
+		add 2 to {-chestviolates::%uuid of player%}
+	if {-ignitetimes::%uuid of player%} > 3:
+		{-ignitetimes::%uuid of player%} < 5
+		set {-ignitetimes::%uuid of player%} to 999
+		add 1 to {-chestviolates::%uuid of player%}
+	if {-chestviolates::%uuid of player%} > 1:
+		execute console command "ban %player% Заблокирован в целях безопасности алгоритмами"
+on sneak toggle:
+	loop all players in radius 4 of player:
+		loop-player is not sender
+		gamemode of loop-player is survival
+		send action bar "&x&d&b&d&5&c&3%loop-player%"
+		
+#----------------------------------
+
+on inventory close:
+	set metadata value "anka_profile" of event-player to 0
+	set metadata value "anka_bank" of event-player to 0
+
+on leave:
+	set metadata value "anka_profile" of event-player to 0
+	set metadata value "anka_bank" of event-player to 0
+
+
+
+#--------------------------------
+
+
+command /pv [<player>]:
+	aliases: aveui:privatechat, privatechat
+	trigger:
+		if {pv::%uuid of player%} is set:
+			delete {pv::%uuid of player%}
+			send "&r⤷ &x&d&b&d&5&c&3Вы вышли из приватного общения"
+			stop
+		send "&r⤷ &x&d&b&d&5&c&3Вы вошли в &6приватный чат. &7(Ваши сообщения скрыты от админов)"
+		send "  &x&d&b&d&5&c&3 чтобы выйти из чата пропиши /pv снова"
+		set {pv::%uuid of player%} to arg-1
+on chat:
+	{pv::%uuid of player%} is set
+	if {mutted::%player%} is true:
+		set {_c} to difference between {mut.tti.%player%} and now
+		if {_c} is more than {muttime.%player%}:
+			execute console command "unmute %player%"
+	{mutted::%player%}  is false
+	{mutmsg.%player%} is false
+	difference between {entertime::%uuid of player%} and now > 1 second
+	{entered::%uuid of player%} is true
+	{spymode::%player%} is false
+	cancel event
+	if message contains "!":
+		delete {pv::%uuid of player%}
+		send "&r⤷ &x&d&b&d&5&c&3Вы автоматически вышли из приватного общения из-за ""&6!"" "
+		stop
+	send "&6&lПЛС ✉ &7%player% &8沙 &f%message%" to player
+	send "&6&lПЛС ✉ &7%player% &8沙 &f%message%" to {pv::%uuid of player%} 
+
+
+
+# OTHER SERVIce
+
+command /rpbank [<text>]:
+	aliases: aveui:rpbank
+	trigger:
+		player has permission "*"
+		if arg-1 is "on":
+			set {rpbank} to true
+			send "{@prefix}&x&d&b&d&5&c&3 РП-Система банка включена."
+		if arg-1 is "off":
+			delete {rpbank} 
+			send "{@prefix}&x&d&b&d&5&c&3 РП-Система банка выключена."
+			
+command /bank:
+	aliases: aveui:bank, balance
+	trigger:
+		if {rpbank} is not set:
+			send action bar "&cОтключено." to sender
+			stop
+		if {bankid::%uuid of player%} is not set:
+			set {bankbal::%uuid of player%} to 0
+			set {bankid::%uuid of player%} to random integer between 111111111 and 999999999
+			set {bankuser::%{bankid::%uuid of player%}%} to name of player
+			send "&r⤷ &x&d&b&d&5&c&3Вам присовен индефитикатор: &a%{bankid::%uuid of player%}%"
+		set metadata value "anka_bank" of event-player to 1
+		open chest inventory with 6 rows named "&f稀稀幸" to player
+		set slot 0 of player's current inventory to black stained glass pane named "&f "
+		set slot 1 of player's current inventory to black stained glass pane named "&f "
+		set slot 2 of player's current inventory to black stained glass pane named "&f "
+		set slot 8 of player's current inventory to black stained glass pane named "&f "
+		set slot 7 of player's current inventory to black stained glass pane named "&f "
+		set slot 6 of player's current inventory to black stained glass pane named "&f "
+		set slot 18 of player's current inventory to black stained glass pane named "&f "
+		set slot 19 of player's current inventory to black stained glass pane named "&f "
+		set slot 25 of player's current inventory to black stained glass pane named "&f "
+		set slot 26 of player's current inventory to black stained glass pane named "&f "
+		set slot 13 of player's current inventory to (paper with custom model data 8) named "&x&9&4&E&5&4&F&l$ &x&9&9&E&6&5&B&lИ&x&9&C&E&7&6&1&lН&x&9&E&E&7&6&7&lФ&x&A&1&E&8&6&E&lО&x&A&3&E&8&7&4&lР&x&A&6&E&9&7&A&lМ&x&A&8&E&9&8&0&lА&x&A&B&E&A&8&6&lЦ&x&A&D&E&A&8&C&lИ&x&B&0&E&B&9&2&lЯ &x&B&5&E&C&9&E&lО &x&B&A&E&D&A&B&lС&x&B&C&E&D&B&1&lЧ&x&B&F&E&E&B&7&lЁ&x&C&1&E&E&B&D&lТ&x&C&4&E&F&C&3&lЕ" with lore "&f", " &6▎ &x&d&b&d&5&c&3Ваш уникальный индефитикатор - &a%{bankid::%uuid of player%}%", " &6▎ &x&d&b&d&5&c&3Ваш баланс - &a%{bankbal::%uuid of player%}%", "&f ", " &c▎ &x&d&b&d&5&c&3Для снятия или внесения на баланс,", " &c▎ &x&d&b&d&5&c&3обратитесь к банкиру", "&f" and " &6沙 &x&d&b&d&5&c&3Наведите для просмотра"
+		set slot 22 of player's current inventory to (paper with custom model data 1) named "&x&4&F&5&3&E&5&l沙 С&x&5&8&5&C&E&6&lО&x&6&2&6&5&E&8&lВ&x&6&B&6&E&E&9&lЕ&x&7&4&7&7&E&A&lР&x&7&D&8&0&E&C&lШ&x&8&7&8&9&E&D&lИ&x&9&0&9&2&E&F&lТ&x&9&9&9&B&F&0&lЬ &x&A&C&A&E&F&3&lТ&x&B&5&B&7&F&4&lР&x&B&E&C&0&F&5&lА&x&C&7&C&9&F&7&lН&x&D&1&D&2&F&8&lЗ&x&D&A&D&B&F&A&lА&x&E&3&E&4&F&B&lК&x&E&C&E&D&F&C&lЦ&x&F&6&F&6&F&E&lИ&x&F&F&F&F&F&F&lЮ" with lore "&f", " &x&4&F&5&3&E&5&l▎ &x&d&b&d&5&c&3Ваш баланс - &x&4&F&5&3&E&5&l%{bankbal::%uuid of player%}%", " &x&4&F&5&3&E&5&l▎ &x&d&b&d&5&c&3Нажмите и введите в чат индефитикатор для транзакции", "&f ", and " &6沙 &x&d&b&d&5&c&3Нажмите для совершения транзакции"
+		set slot 40 of player's current inventory to (paper with custom model data 11) named "&x&C&6&C&6&C&6&lН&x&C&1&C&1&C&1&lА&x&B&B&B&B&B&B&lС&x&B&6&B&6&B&6&lТ&x&B&1&B&1&B&1&lР&x&A&B&A&B&A&B&lО&x&A&6&A&6&A&6&lЙ&x&A&0&A&0&A&0&lК&x&9&B&9&B&9&B&lИ &x&9&0&9&0&9&0&lП&x&8&B&8&B&8&B&lР&x&8&6&8&6&8&6&lО&x&8&0&8&0&8&0&lФ&x&7&B&7&B&7&B&lИ&x&7&5&7&5&7&5&lЛ&x&7&0&7&0&7&0&lЯ" with lore "&f", " &6▎ &x&d&b&d&5&c&3Нажмите сюда, чтобы перейти в", " &6▎ &x&d&b&d&5&c&3ваш профиль", "&f" and " &6沙 &x&d&b&d&5&c&3Нажмите лкм чтобы перейти"		
+# &x&6&0&1&1&F&B⭐ &x&6&C&2&3&F&BП&x&7&2&2&C&F&Bе&x&7&8&3&5&F&Bр&x&7&E&3&E&F&Bв&x&8&3&4&7&F&Bо&x&8&9&5&0&F&Bо&x&8&F&5&9&F&Bт&x&9&5&6&2&F&Bк&x&9&B&6&B&F&Bр&x&A&1&7&4&F&Bы&x&A&7&7&D&F&Bв&x&A&D&8&5&F&Aа&x&B&3&8&E&F&Aт&x&B&9&9&7&F&Aе&x&B&F&A&0&F&Aл&x&C&5&A&9&F&Aь &x&D&1&B&B&F&Aэ&x&D&6&C&4&F&Aн&x&D&C&C&D&F&Aд&x&E&2&D&6&F&Aа &x&E&E&E&8&F&AБ&x&F&4&F&1&F&AХ&x&F&A&F&A&F&A3
+command /profile:
+	aliases: aveui:profile, timeplayed
+	trigger:
+		set metadata value "anka_profile" of event-player to 1
+		open chest inventory with 6 rows named "&f稀稀프" to player
+		set slot 0 of player's current inventory to black stained glass pane named "&f "
+		set slot 1 of player's current inventory to black stained glass pane named "&f "
+		set slot 2 of player's current inventory to black stained glass pane named "&f "
+		set slot 8 of player's current inventory to black stained glass pane named "&f "
+		set slot 7 of player's current inventory to black stained glass pane named "&f "
+		set slot 6 of player's current inventory to black stained glass pane named "&f "
+		set slot 18 of player's current inventory to black stained glass pane named "&f "
+		set slot 19 of player's current inventory to black stained glass pane named "&f "
+		set slot 25 of player's current inventory to black stained glass pane named "&f "
+		set slot 26 of player's current inventory to black stained glass pane named "&f "
+		set {_ach1} to ""
+		if {achivmenta::%player's name%::endopener} is set:
+			set {_ach1} to "&x&6&0&1&1&F&B⭐ &x&6&C&2&3&F&BП&x&7&2&2&C&F&Bе&x&7&8&3&5&F&Bр&x&7&E&3&E&F&Bв&x&8&3&4&7&F&Bо&x&8&9&5&0&F&Bо&x&8&F&5&9&F&Bт&x&9&5&6&2&F&Bк&x&9&B&6&B&F&Bр&x&A&1&7&4&F&Bы&x&A&7&7&D&F&Bв&x&A&D&8&5&F&Aа&x&B&3&8&E&F&Aт&x&B&9&9&7&F&Aе&x&B&F&A&0&F&Aл&x&C&5&A&9&F&Aь &x&D&1&B&B&F&Aэ&x&D&6&C&4&F&Aн&x&D&C&C&D&F&Aд&x&E&2&D&6&F&Aа &x&E&E&E&8&F&AБ&x&F&4&F&1&F&AХ&x&F&A&F&A&F&A3"
+		set slot 4 of player's current inventory to (paper with custom model data 4) named "&r礈 &x&F&6&C&5&8&4&lИ&x&F&7&C&7&8&9&lЗ&x&F&7&C&A&8&E&lМ&x&F&8&C&C&9&3&lЕ&x&F&8&C&E&9&8&lН&x&F&9&D&1&9&D&lИ&x&F&9&D&3&A&2&lТ&x&F&A&D&5&A&7&lЬ &x&F&B&D&A&B&0&lП&x&F&B&D&D&B&5&lС&x&F&C&D&F&B&A&lЕ&x&F&C&E&1&B&F&lВ&x&F&D&E&4&C&4&lД&x&F&D&E&6&C&9&lО&x&F&E&E&8&C&E&lН&x&F&E&E&B&D&3&lИ&x&F&F&E&D&D&8&lМ" with lore "&f", " &6▎ &x&d&b&d&5&c&3Нажмите, чтобы изменить ваш псевдоним", " &6▎ &x&d&b&d&5&c&3в табе и чате.", "&f ", " &a▎ &x&d&b&d&5&c&3Доступно если вы &aнаиграли хотя-бы 2 дня.", "&f" and " &6沙 &x&d&b&d&5&c&3Нажмите лкм чтобы изменить"
+		set slot 14 of player's current inventory to (paper with custom model data 5) named "&x&F&3&A&4&8&4&l❌ &x&F&2&9&F&7&B&lС&x&F&1&9&D&7&7&lК&x&F&1&9&A&7&3&lР&x&F&0&9&8&6&E&lЫ&x&F&0&9&5&6&A&lТ&x&E&F&9&3&6&5&lЬ &x&E&E&8&E&5&D&lС&x&E&D&8&C&5&8&lВ&x&E&D&8&9&5&4&lО&x&E&C&8&7&5&0&lЙ &x&E&B&8&2&4&7&lМ&x&E&B&7&F&4&2&lИ&x&E&A&7&D&3&E&lР" with lore "&f", " &6▎ &x&d&b&d&5&c&3Нажмите, чтобы скрыть мир в котором вы находитесь", " &6▎ &x&d&b&d&5&c&3из таба и чата.", "&f ", " &a▎ &x&d&b&d&5&c&3Доступно если вы &aнаиграли хотя-бы 1 день.", "&f" and " &6沙 &x&d&b&d&5&c&3Нажмите лкм чтобы скрыть"
+		set slot 13 of player's current inventory to (paper with custom model data 3) named "&r可 &x&0&8&F&B&1&8&lИ&x&1&5&F&B&2&4&lН&x&2&1&F&B&3&0&lФ&x&2&E&F&B&3&C&lО&x&3&B&F&B&4&8&lР&x&4&8&F&B&5&3&lМ&x&5&4&F&B&5&F&lА&x&6&1&F&B&6&B&lЦ&x&6&E&F&B&7&7&lИ&x&7&B&F&B&8&3&lЯ &x&9&4&F&A&9&B&lО &x&A&E&F&A&B&3&lП&x&B&A&F&A&B&F&lР&x&C&7&F&A&C&A&lО&x&D&4&F&A&D&6&lФ&x&E&1&F&A&E&2&lИ&x&E&D&F&A&E&E&lЛ&x&F&A&F&A&F&A&lЕ" with lore "&f", " &6▎ &x&d&b&d&5&c&3Наиграно всего: &a%time played of player%", " &6▎ &x&d&b&d&5&c&3Первый заход: &a%first login of player%"
+		set slot 12 of player's current inventory to (paper with custom model data 2) named "&x&F&3&A&4&8&4&l❌ &x&F&2&9&F&7&C&lЗ&x&F&1&9&D&7&8&lА&x&F&1&9&B&7&4&lБ&x&F&0&9&9&6&F&lЛ&x&F&0&9&6&6&B&lО&x&E&F&9&4&6&7&lК&x&E&F&9&2&6&3&lИ&x&E&E&8&F&5&F&lР&x&E&E&8&D&5&B&lО&x&E&D&8&B&5&7&lВ&x&E&D&8&8&5&3&lА&x&E&C&8&6&4&E&lТ&x&E&C&8&4&4&A&lЬ &x&E&B&7&F&4&2&lЛ&x&E&A&7&D&3&E&lС" with lore "&f", " &6▎ &x&d&b&d&5&c&3Нажмите сюда, чтобы запретить", " &6▎ &x&d&b&d&5&c&3писать вам в личные сообщения. (/msg,tell)", "&f" and " &6沙 &x&d&b&d&5&c&3Нажмите лкм чтобы запретить"
+		set slot 22 of player's current inventory to (paper with custom model data 6) named "&x&F&3&A&4&8&4&lО&x&F&3&A&2&8&1&lБ&x&F&2&A&0&7&D&lЩ&x&F&2&9&E&7&A&lЕ&x&F&1&9&D&7&7&lЕ &x&F&0&9&9&7&0&lН&x&F&0&9&7&6&D&lА&x&F&0&9&5&6&9&lИ&x&E&F&9&3&6&6&lГ&x&E&F&9&1&6&3&lР&x&E&E&9&0&5&F&lА&x&E&E&8&E&5&C&lН&x&E&D&8&C&5&9&lН&x&E&D&8&A&5&5&lО&x&E&D&8&8&5&2&lЕ &x&E&C&8&4&4&B&lВ&x&E&B&8&3&4&8&lР&x&E&B&8&1&4&5&lЕ&x&E&A&7&F&4&1&lМ&x&E&A&7&D&3&E&lЯ" with lore "&f", " &6▎ &x&d&b&d&5&c&3Нажмите сюда, чтобы посмотреть", " &6▎ &x&d&b&d&5&c&3рейтинг по времени игры (первые 10 чел)", "&f" and " &6沙 &x&d&b&d&5&c&3Нажмите лкм чтобы посмотреть"
+		if {rpbank} is set:
+			set slot 40 of player's current inventory to (paper with custom model data 7) named "&x&9&4&E&5&4&F&l$ &x&9&A&E&6&5&E&lБ&x&9&E&E&7&6&6&lА&x&A&1&E&8&6&E&lЛ&x&A&4&E&8&7&6&lА&x&A&7&E&9&7&D&lН&x&A&A&E&A&8&5&lС &x&B&1&E&B&9&5&lВ &x&B&7&E&C&A&4&lБ&x&B&A&E&D&A&C&lА&x&B&E&E&E&B&4&lН&x&C&1&E&E&B&B&lК&x&C&4&E&F&C&3&lЕ" with lore "&f", " &6▎ &x&d&b&d&5&c&3Нажмите сюда, чтобы перейти в", " &6▎ &x&d&b&d&5&c&3ваш профиль в системе общего банка", "&f" and " &6沙 &x&d&b&d&5&c&3Нажмите лкм чтобы перейти"		
+	
+	
+on inventory click:
+	metadata value "anka_bank" of event-player is 1
+	if clicked slot is 22:
+		cancel event
+		close inventory of player
+		send "&r⤷ &x&d&b&d&5&c&3Введите в чат индефитикатор того, кому вы собираетесь перевести &7(Отменить - cancel)"
+		set {-banktrans::%uuid of player%} to 1
+		stop
+	if clicked slot is 40:
+		make player swing main hand
+		cancel event
+		close inventory of player
+		wait a tick
+		execute player command "profile"
+		stop
+	cancel event
+on chat:
+	{-banktrans::%uuid of player%} is 1
+	delete {-banktrans::%uuid of player%}
+	set {_a} to message parsed as number
+	if number of lower case characters in message > 0:
+		send "&r⤷ &x&d&b&d&5&c&3Операция отменена. Введены неккоректные символы"
+		stop
+	if number of upper case characters in message > 0:
+		send "&r⤷ &x&d&b&d&5&c&3Операция отменена. Введены неккоректные символы"
+		stop
+	send "&r⤷ &x&d&b&d&5&c&3Теперь введите /sum сумма"
+	set {-banktrans::%uuid of player%} to message
+
+command /sumadd [<offlineplayer>] [<number>]:
+	permission: avpack.bankir
+	trigger:
+		arg-2 is set
+		add arg-2 to {bankbal::%uuid of arg-1%}
+		send action bar "&aНачислено игроку."
+
+command /sumget [<offlineplayer>] :
+	permission: avpack.bankir
+	trigger:
+		arg-1 is set
+		send action bar "&fБаланс %arg-1% - &a%{bankbal::%uuid of arg-1%}%"
+command /sum [<number>]:
+	trigger:
+		if {rpbank} is not set:
+			send action bar "&cОтключено." to sender
+			stop
+		{-banktrans::%uuid of player%} is set
+		{-banktrans::%uuid of player%} is not 1
+		set {_a} to arg-1
+		if {_a} < 0.01:
+			delete {-banktrans::%uuid of player%}
+			send "&r⤷ &x&d&b&d&5&c&3Вы не можете отправить такую сумму"
+			stop
+		if {bankbal::%uuid of player%} >= {_a}:
+			remove {_a} from {bankbal::%uuid of player%}
+			send "&r⤷ &x&d&b&d&5&c&3Вы перевели игроку &a%{bankuser::%{-banktrans::%uuid of player%}%}%&x&d&b&d&5&c&3 сумму &a%arg-1% "
+			wait a tick
+			set {_h} to {bankuser::%{-banktrans::%uuid of player%}%} parsed as offlineplayer
+			add {_a} to {bankbal::%uuid of {_h}%}
+			send "&r⤷ &x&d&b&d&5&c&3Вы получили от игрока &a%player%&x&d&b&d&5&c&3 сумму &a%arg-1%" to {_h}
+
+		delete {-banktrans::%uuid of player%}
+			
+on inventory click:
+	metadata value "anka_profile" of event-player is 1
+	if clicked slot is 14:
+		make player swing main hand
+		cancel event
+		close inventory of player
+		if time played of player >= 1 day:
+			if {hideworld::%uuid of player%} != 1:
+				set {hideworld::%uuid of player%} to 1
+				send "&r⤷ &x&d&b&d&5&c&3Вы скрыли ваш мир"
+				stop
+			else:
+				delete {hideworld::%uuid of player%}
+				stop
+		else:
+			send "&r⤷ &x&d&b&d&5&c&3Вы не наиграли 1 день для скрытия."
+			stop
+	if clicked slot is 12:
+		make player swing main hand
+		cancel event
+		close inventory of player
+		if {blocklc::%uuid of player%} != 1:
+			set {blocklc::%uuid of player%} to 1
+			send "&r⤷ &x&d&b&d&5&c&3Вы запретили сообщения в ЛС."
+			stop
+		else:
+			delete {blocklc::%uuid of player%}
+			stop
+	if clicked slot is 22:
+		make player swing main hand
+		cancel event
+		close inventory of player
+		execute player command "tmp"
+		stop
+	if clicked slot is 40:
+		make player swing main hand
+		cancel event
+		close inventory of player
+		execute player command "bank"
+		stop
+	if clicked slot is 4:
+		make player swing main hand
+		cancel event
+		if time played of player >= 2 days:
+			close inventory of player
+			set {-setname::%uuid of player%} to 1
+			send "&r⤷ &x&d&b&d&5&c&3Введите свой новый ник в чат. &7(Отменить - cancel)"
+			stop
+		else:
+			if player has permission "avpack.moder":
+				close inventory of player
+				set {-setname::%uuid of player%} to 1
+				send "&r⤷ &x&d&b&d&5&c&3Введите свой новый ник в чат. &7(Отменить - cancel)"
+				stop
+			send "&r⤷ &x&d&b&d&5&c&3Вы не наиграли 2 дня для изменения ника."
+			stop
+
+	cancel event
+on chat:
+	{-setname::%uuid of player%} is set
+	if message is "cancel":
+		delete {-setname::%uuid of player%}
+		send "&r⤷ &x&d&b&d&5&c&3Отменено."
+	else:
+		delete {-setname::%uuid of player%}
+		loop {whl::*}:
+			message is loop-index
+			loop-index is not player's name
+			send "&r⤷ &x&d&b&d&5&c&3Вы не можете устанавливать чужие имена"
+			stop 
+		set {_t::*} to message split at ""
+		set {_c1} to {_t::1}
+		set {_c2} to {_t::2}
+		set {_c3} to {_t::3}
+		set {_c4} to {_t::4}
+		set {_c5} to {_t::5}
+		#set {_c1} to char at 6 in message
+		loop {whl::*}:
+			delete {_k::*}
+			set {_k::*} to "%loop-index%" split at ""
+			set {_er} to 0
+			if name of player is not loop-index:
+				if {_c1} is {_k::1}:
+					add 1 to {_er}
+				if {_c2} is {_k::2}:
+					add 1 to {_er}
+				if {_c3} is {_k::3}:
+					add 1 to {_er}
+				if {_c4} is {_k::4}:
+					add 1 to {_er}
+				if {_c5} is {_k::5}:
+					add 1 to {_er}
+				if {_er} > 3:
+					send "&r⤷ &x&d&b&d&5&c&3Вы не можете устанавливать чужие имена"
+					stop
+			
+		number of lower case characters in message < 16
+		number of upper case characters in message < 16
+		send "&r⤷ &x&d&b&d&5&c&3Ник обновлён."
+		set {nick::%player%} to colored message
+		
+		
+		
+		
+#------------		
+		
+		
+#------------		
+		
+command /specialrestart:
+	permission: *
+	trigger:
+		send "&r⤷ &x&d&b&d&5&c&3Через 1 минуту произойдет запланированный рестарт "
+		execute console command "manualbackup"
+		wait 0.5 minutes
+		set {rest} to true
+		loop all players:
+			play sound "ui.toast.challenge_complete" with pitch 0.1 to the loop-player
+		wait 2 seconds
+		set {restartdata} to now
+		broadcast "&5&lРЕСТАРТ!"
+		wait 1 second
+		set {restartdata} to now
+		loop 60 times:
+			wait 0.04 seconds
+			broadcast "&c&l&kfwefwefewojfowjfРЕСТАРТ!"
+		restart the server
+command /afk:
+	aliases: aveui:afk
+	trigger:
+		set {-afkmode::%uuid of player%} to 1
+		send "&r⤷ &x&d&b&d&5&c&3Вы в режиме АФК."
+
+on command:
+    executor is a player
+    player doesn't have permission "*"
+    if "%complete command%" contains ":":
+        cancel event
+  
+  
+
+			
+command /ankamakesay [<offlineplayer>] [<text>]:
+	permission: *
+	trigger:
+		make arg-1 say arg-2
+

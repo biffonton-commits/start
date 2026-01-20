@@ -1,0 +1,19 @@
+#fix ankaengine
+
+
+
+every 20 ticks:
+	set {_e} to now
+	wait 20 ticks
+	set {_a} to "%difference between now and {_e}%"
+	replace all " seconds" in {_a} with ""
+	replace all " second" in {_a} with ""
+	set {_h} to {_a} parsed as number
+	{_h} >= 1
+	remove 1 from {_h}
+	set {_h2} to {_h}*10
+	set {_ax} to 20-{_h2}
+	set {-currenttps} to {_ax}
+every 10 minutes:
+	save "world"
+

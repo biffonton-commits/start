@@ -1,0 +1,70 @@
+on chat:
+	{entered::%uuid of player%} is true
+	{spymode::%player%} is false
+	difference between now and {entertime::%uuid of player%} > 1 second
+	difference between {restartdata} and now > 6 seconds
+	le spawn text display 2 above player
+	set {_x} to location of block 3 above player
+	set {_e} to last spawned text display
+	set {_ehe} to colored message
+	replace ":heart:" in {_ehe} with "礈"
+	replace ":mic:" in {_ehe} with "化"
+	replace "௵" in {_ehe} with " "
+	set display text of {_e} to colored {_ehe}
+	set display billboard of {_e} to vertical
+	if length of message < 18:
+		set display teleport duration of {_e} to 180
+		set display text shadowed of {_e} to true
+		set display default text background of {_e} to false
+		set display view range of {_e} to 15
+		set display text background color of {_e} to bukkitColor(0,0,0,0)
+		wait a tick
+		teleport {_e} to {_x}
+		loop 50 times:
+			wait a tick
+			set display text opacity of {_e} to display text opacity of {_e} - 5
+		kill {_e}
+	else:
+		set display teleport duration of {_e} to 280
+		set display text shadowed of {_e} to true
+		set display default text background of {_e} to false
+		set display view range of {_e} to 15
+		set display text background color of {_e} to bukkitColor(0,0,0,0)
+		wait a tick
+		teleport {_e} to {_x}
+		loop 100 times:
+			wait a tick
+			set display text opacity of {_e} to display text opacity of {_e} - 2.5
+		kill {_e}
+		
+		
+on damage:
+	
+	attacker is player
+	{entered::%uuid of attacker%} is true
+	{spymode::%attacker%} is false
+	le spawn text display at block above victim
+	set {_e} to last spawned text display
+	set display text of {_e} to "&x&B&E&2&D&2&DХП %health of victim*2-final damage*2%"
+	set display billboard of {_e} to vertical
+	set display text shadowed of {_e} to true
+	set display default text background of {_e} to true
+	set display view range of {_e} to 15
+	set display text background color of {_e} to bukkitColor(0,0,0,0)
+	wait a tick
+	loop 31 times:
+		wait a tick
+		set display text opacity of {_e} to display text opacity of {_e} - 8
+		if display text opacity of {_e} > 80:
+			if victim is alive:
+				if hit is not a critical:
+					set display text of {_e} to "&x&B&E&2&D&2&DУРОН &e%final damage*2%"
+				else:
+					set display text of {_e} to "&x&D&4&7&E&4&C❌ &x&E&2&A&9&8&8К&x&E&A&B&F&A&6Р&x&F&1&D&4&C&3И&x&F&8&E&A&E&1Т %final damage*2%"
+			else:
+				set display text of {_e} to "&x&6&4&0&8&F&B☠ &x&6&9&3&2&F&4С&x&6&B&4&7&F&0М&x&6&D&5&B&E&DЕ&x&6&F&7&0&E&9Р&x&7&2&8&5&E&6Т&x&7&4&9&A&E&2Ь"
+	kill {_e}
+	
+
+on load:
+	set {restartdata} to 1 hour before now

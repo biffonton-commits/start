@@ -1,0 +1,45 @@
+
+
+
+
+
+
+command /ankaskin [<text>] [<text>]:
+	cooldown: 5 seconds
+	cooldown message: &r⤷ &x&d&b&d&5&c&3Менять скин можно каждые 5 сек.
+	trigger:
+		if arg-2 is not set:
+			if arg-1 is "upd":
+				execute console command "skin update %player%"
+				send "&r⤷ &x&d&b&d&5&c&3Выполняется обновление.."
+				stop
+			cancel the cooldown
+			send "&r⤷ &x&d&b&d&5&c&3Скины:"
+			send "&f"
+			send " &6▎ &x&d&b&d&5&c&3/skin url ссылка   (установить скин через ссылку)"
+			send " &6▎ &x&d&b&d&5&c&3/skin name ник (установить скин через ник)"
+			send " &6▎ &x&d&b&d&5&c&3/skin upd (обновить скин)"
+			send "&f"
+			send " &7▎ &x&d&b&d&5&c&3Основано на SkinsRestorer API"
+			send "&f"
+		else:
+			if arg-1 is "url":
+				set {-skinexc::%uuid of player%} to now
+				execute player command "skin url ""%arg 2%"" "
+				send "&r⤷ &x&d&b&d&5&c&3Выполняется загрузка.."
+			if arg-1 is "name":
+				execute console command "skin set %arg 2% %player%"
+				send "&r⤷ &x&d&b&d&5&c&3Выполняется загрузка.."
+
+on join:
+	set {-skinexc::%uuid of player%} to now
+on command:
+	sender is player
+	if difference between now and {-skinexc::%uuid of player%} > 0.1 second:
+		if "%complete command%" contains "skin":
+			set {_e} to complete command
+			replace all "skin" in {_e} with ""
+			sender is player
+			cancel event
+			set {-skinexc::%uuid of player%} to now
+			execute player command "ankaskin%{_e}%"
